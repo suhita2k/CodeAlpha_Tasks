@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Image Gallery</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ==================== Header ==================== -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span>📷</span>
+                <span>Gallery Pro</span>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-primary" id="uploadBtn">
+                    <span>➕</span> Upload
+                </button>
+                <button class="btn btn-secondary" id="favoritesBtn">
+                    <span>❤️</span> Favorites
+                </button>
+                <button class="btn btn-icon btn-secondary" id="themeToggle" title="Toggle Theme">
+                    🌙
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== Category Filters ==================== -->
+    <section class="filter-section">
+        <div class="filter-container">
+            <span class="filter-label">Filter:</span>
+            <button class="filter-btn active" data-category="all">All</button>
+            <button class="filter-btn" data-category="nature">🌿 Nature</button>
+            <button class="filter-btn" data-category="travel">✈️ Travel</button>
+            <button class="filter-btn" data-category="tech">💻 Tech</button>
+            <button class="filter-btn" data-category="adventures">🏔️ Adventures</button>
+            <button class="filter-btn" data-category="people">👥 People</button>
+            <button class="filter-btn" data-category="animal">🐾 Animal</button>
+            <button class="filter-btn" data-category="history">🏛️ History</button>
+            <button class="filter-btn" data-category="bird">🐦 Bird</button>
+        </div>
+    </section>
+
+    <!-- ==================== Gallery Grid ==================== -->
+    <main class="gallery-container">
+        <div class="gallery-grid" id="galleryGrid"></div>
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <div class="icon">📭</div>
+            <h3>No images found</h3>
+            <p>Try selecting a different category or upload new images</p>
+        </div>
+    </main>
+
+    <!-- ==================== Lightbox Modal ==================== -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <div class="lightbox-actions">
+                <button class="lightbox-btn" id="editFromLightbox">✏️ Edit</button>
+                <button class="lightbox-btn" id="downloadFromLightbox">⬇️ Download</button>
+            </div>
+            <button class="lightbox-close" id="closeLightbox">✕</button>
+            <button class="lightbox-nav lightbox-prev" id="prevImage">❮</button>
+            <img class="lightbox-image" id="lightboxImage" src="" alt="">
+            <button class="lightbox-nav lightbox-next" id="nextImage">❯</button>
+            <div class="lightbox-info" id="lightboxInfo"></div>
+        </div>
+    </div>
+
+    <!-- ==================== Upload Modal ==================== -->
+    <div class="upload-modal" id="uploadModal">
+        <div class="upload-content">
+            <h2 class="upload-title">Upload Image</h2>
+            <div class="upload-dropzone" id="dropzone">
+                <div class="icon">📁</div>
+                <p>Drag & drop image here or click to browse</p>
+            </div>
+            <input type="file" class="hidden-input" id="fileInput" accept="image/*">
+            <form class="upload-form" id="uploadForm" style="display: none;">
+                <div id="previewContainer"></div>
+                <div class="form-group">
+                    <label>Image Title</label>
+                    <input type="text" id="imageTitle" placeholder="Enter image title" required>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="imageCategory">
+                        <option value="nature">🌿 Nature</option>
+                        <option value="travel">✈️ Travel</option>
+                        <option value="tech">💻 Tech</option>
+                        <option value="adventures">🏔️ Adventures</option>
+                        <option value="people">👥 People</option>
+                        <option value="animal">🐾 Animal</option>
+                        <option value="history">🏛️ History</option>
+                        <option value="bird">🐦 Bird</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelUpload">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add to Gallery</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== Image Editor Modal ==================== -->
+    <div class="editor-modal" id="editorModal">
+        <div class="editor-header">
+            <h2 class="editor-title">Image Editor</h2>
+            <div class="editor-controls">
+                <button class="btn btn-secondary" id="undoBtn" title="Undo">↩️ Undo</button>
+                <button class="btn btn-secondary" id="redoBtn" title="Redo">↪️ Redo</button>
+                <button class="btn btn-secondary" id="resetBtn">🔄 Reset</button>
+                <button class="btn btn-primary" id="saveEditBtn">💾 Save</button>
+                <button class="btn btn-secondary" id="downloadEditBtn">⬇️ Download</button>
+                <button class="btn btn-secondary" id="closeEditor">✕ Close</button>
+            </div>
+        </div>
+        <div class="editor-body">
+            <div class="editor-canvas-container">
+                <canvas id="editorCanvas"></canvas>
+            </div>
+            <div class="editor-sidebar">
+                <!-- Transform Tools -->
+                <div class="editor-panel">
+                    <h3 class="panel-title">Transform</h3>
+                    <div class="panel-content">
+                        <button class="tool-btn" id="rotateLeft">↶ Rotate Left</button>
+                        <button class="tool-btn" id="rotateRight">↷ Rotate Right</button>
+                        <button class="tool-btn" id="flipH">↔️ Flip H</button>
+                        <button class="tool-btn" id="flipV">↕️ Flip V</button>
+                        <button class="tool-btn" id="cropBtn">✂️ Crop</button>
+                        <button class="tool-btn" id="applyCrop" style="display:none;">✓ Apply Crop</button>
+                        <button class="tool-btn" id="cancelCrop" style="display:none;">✕ Cancel</button>
+                    </div>
+                </div>
+
+                <!-- Zoom Controls -->
+                <div class="editor-panel">
+                    <h3 class="panel-title">Zoom</h3>
+                    <div class="panel-content">
+                        <button class="tool-btn" id="zoomIn">🔍+ Zoom In</button>
+                        <button class="tool-btn" id="zoomOut">🔍- Zoom Out</button>
+                        <button class="tool-btn" id="zoomFit">📐 Fit</button>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="editor-panel">
+                    <h3 class="panel-title">Filters</h3>
+                    <div class="panel-content">
+                        <div class="slider-group">
+                            <div class="slider-label">
+                                <span>Brightness</span>
+                                <span id="brightnessValue">100%</span>
+                            </div>
+                            <input type="range" class="slider-input" id="brightness" min="0" max="200" value="100">
+                        </div>
+                        <div class="slider-group">
+                            <div class="slider-label">
+                                <span>Contrast</span>
+                                <span id="contrastValue">100%</span>
+                            </div>
+                            <input type="range" class="slider-input" id="contrast" min="0" max="200" value="100">
+                        </div>
+                        <div class="slider-group">
+                            <div class="slider-label">
+                                <span>Saturation</span>
+                                <span id="saturationValue">100%</span>
+                            </div>
+                            <input type="range" class="slider-input" id="saturation" min="0" max="200" value="100">
+                        </div>
+                        <div class="slider-group">
+                            <div class="slider-label">
+                                <span>Blur</span>
+                                <span id="blurValue">0px</span>
+                            </div>
+                            <input type="range" class="slider-input" id="blur" min="0" max="20" value="0">
+                        </div>
+                        <button class="tool-btn" id="grayscaleBtn">⬛ Grayscale</button>
+                        <button class="tool-btn" id="sepiaBtn">🟫 Sepia</button>
+                        <button class="tool-btn" id="invertBtn">🔄 Invert</button>
+                    </div>
+                </div>
+
+                <!-- Drawing Tools -->
+                <div class="editor-panel">
+                    <h3 class="panel-title">Drawing</h3>
+                    <div class="panel-content">
+                        <button class="tool-btn" id="drawBtn">✏️ Draw</button>
+                        <button class="tool-btn" id="eraserBtn">🧹 Eraser</button>
+                        <div class="slider-group">
+                            <div class="slider-label">
+                                <span>Brush Size</span>
+                                <span id="brushSizeValue">5px</span>
+                            </div>
+                            <input type="range" class="slider-input" id="brushSize" min="1" max="50" value="5">
+                        </div>
+                        <div class="color-picker-group">
+                            <label>Color:</label>
+                            <input type="color" id="drawColor" value="#ff0000">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text Tool -->
+                <div class="editor-panel">
+                    <h3 class="panel-title">Text Overlay</h3>
+                    <div class="panel-content">
+                        <div class="text-input-group">
+                            <input type="text" id="textInput" placeholder="Enter text...">
+                            <select id="fontSize">
+                                <option value="16">Small (16px)</option>
+                                <option value="24">Medium (24px)</option>
+                                <option value="36" selected>Large (36px)</option>
+                                <option value="48">X-Large (48px)</option>
+                                <option value="72">XX-Large (72px)</option>
+                            </select>
+                            <select id="fontFamily">
+                                <option value="Arial">Arial</option>
+                                <option value="Georgia">Georgia</option>
+                                <option value="Times New Roman">Times New Roman</option>
+                                <option value="Courier New">Courier New</option>
+                                <option value="Verdana">Verdana</option>
+                            </select>
+                        </div>
+                        <div class="color-picker-group">
+                            <label>Text Color:</label>
+                            <input type="color" id="textColor" value="#ffffff">
+                        </div>
+                        <button class="tool-btn" id="addTextBtn">➕ Add Text</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== Toast Container ==================== -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ==================== JavaScript ==================== -->
+    <script src="script.js"></script>
+</body>
+</html>
