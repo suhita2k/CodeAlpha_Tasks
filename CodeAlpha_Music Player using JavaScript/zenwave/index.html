@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZenWave - Advanced Music Player</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen">
+    <!-- Main Container -->
+    <div id="app" class="container mx-auto px-4 py-6 max-w-7xl">
+        <!-- Header -->
+        <header class="flex items-center justify-between mb-8">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                    <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                    </svg>
+                </div>
+                <h1 class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">ZenWave</h1>
+            </div>
+            <div class="flex items-center gap-3">
+                <!-- Sleep Timer -->
+                <button id="sleepTimerBtn" class="control-btn p-2 rounded-full hover:bg-white/10" title="Sleep Timer">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                </button>
+                <!-- Mini Player Toggle -->
+                <button id="miniPlayerBtn" class="control-btn p-2 rounded-full hover:bg-white/10" title="Mini Player">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                    </svg>
+                </button>
+                <!-- Theme Toggle -->
+                <button id="themeToggle" class="control-btn p-2 rounded-full hover:bg-white/10" title="Toggle Theme">
+                    <svg id="themeIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Grid -->
+        <div class="grid lg:grid-cols-3 gap-6">
+            <!-- Left Panel - Now Playing -->
+            <div class="lg:col-span-2">
+                <div id="playerContainer" class="glass rounded-3xl p-6 md:p-8">
+                    <!-- Album Art & Info -->
+                    <div class="flex flex-col md:flex-row items-center gap-6 md:gap-8 mb-8">
+                        <div class="relative">
+                            <img id="albumCover" src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300&h=300&fit=crop" 
+                                alt="Album Cover" class="album-cover w-48 h-48 md:w-64 md:h-64 rounded-2xl object-cover">
+                            <div id="playingIndicator" class="absolute -bottom-2 -right-2 w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center hidden">
+                                <div class="flex gap-1">
+                                    <span class="w-1 h-4 bg-white rounded-full animate-pulse"></span>
+                                    <span class="w-1 h-5 bg-white rounded-full animate-pulse" style="animation-delay: 0.2s"></span>
+                                    <span class="w-1 h-3 bg-white rounded-full animate-pulse" style="animation-delay: 0.4s"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center md:text-left flex-1">
+                            <h2 id="songTitle" class="text-2xl md:text-3xl font-bold mb-2">Midnight Dreams</h2>
+                            <p id="artistName" class="text-lg opacity-70 mb-4">Luna Aurora</p>
+                            <div class="flex items-center justify-center md:justify-start gap-4">
+                                <button id="likeBtn" class="heart-btn control-btn p-2 rounded-full hover:bg-white/10" title="Like Song">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                    </svg>
+                                </button>
+                                <span id="playbackSpeed" class="speed-badge cursor-pointer" title="Change Speed">1x</span>
+                                <button id="lyricsToggle" class="control-btn p-2 rounded-full hover:bg-white/10" title="Show Lyrics">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="mb-6">
+                        <div id="progressBar" class="progress-bar h-2 rounded-full relative group">
+                            <div id="progressFill" class="progress-fill h-full rounded-full" style="width: 0%"></div>
+                            <div id="progressThumb" class="progress-thumb absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-white shadow-lg" style="left: 0%"></div>
+                        </div>
+                        <div class="flex justify-between mt-2 text-sm opacity-70">
+                            <span id="currentTime">0:00</span>
+                            <span id="totalTime">0:00</span>
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <div class="flex items-center justify-center gap-4 md:gap-6 mb-6">
+                        <button id="shuffleBtn" class="control-btn p-2 rounded-full hover:bg-white/10" title="Shuffle">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                            </svg>
+                        </button>
+                        <button id="prevBtn" class="control-btn p-3 rounded-full hover:bg-white/10" title="Previous">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+                            </svg>
+                        </button>
+                        <button id="playBtn" class="w-16 h-16 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center shadow-lg hover:shadow-xl transition-all hover:scale-105">
+                            <svg id="playIcon" class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                            <svg id="pauseIcon" class="w-8 h-8 text-white hidden" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                            </svg>
+                        </button>
+                        <button id="nextBtn" class="control-btn p-3 rounded-full hover:bg-white/10" title="Next">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+                            </svg>
+                        </button>
+                        <button id="repeatBtn" class="control-btn p-2 rounded-full hover:bg-white/10 relative" title="Repeat">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                            </svg>
+                            <span id="repeatOneIndicator" class="absolute -top-1 -right-1 text-xs font-bold hidden">1</span>
+                        </button>
+                    </div>
+
+                    <!-- Volume Control -->
+                    <div class="flex items-center justify-center gap-4">
+                        <button id="muteBtn" class="control-btn p-2 rounded-full hover:bg-white/10" title="Mute">
+                            <svg id="volumeIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+                            </svg>
+                            <svg id="muteIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/>
+                            </svg>
+                        </button>
+                        <input type="range" id="volumeSlider" class="volume-slider w-32 md:w-48" min="0" max="100" value="80">
+                        <span id="volumeValue" class="text-sm opacity-70 w-10">80%</span>
+                    </div>
+                </div>
+
+                <!-- Tabs Section -->
+                <div class="glass rounded-3xl p-6 mt-6">
+                    <div class="flex gap-2 mb-6 overflow-x-auto pb-2">
+                        <button class="tab-btn active px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap" data-tab="visualizer">Visualizer</button>
+                        <button class="tab-btn px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap" data-tab="equalizer">Equalizer</button>
+                        <button class="tab-btn px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap" data-tab="lyrics">Lyrics</button>
+                    </div>
+
+                    <!-- Visualizer Tab -->
+                    <div id="visualizerTab" class="tab-content">
+                        <div class="relative">
+                            <canvas id="visualizer" class="visualizer-canvas w-full h-48 md:h-64"></canvas>
+                            <button id="fullscreenVizBtn" class="absolute top-2 right-2 p-2 rounded-lg bg-black/50 hover:bg-black/70 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="flex justify-center gap-4 mt-4">
+                            <button class="viz-type px-3 py-1 rounded-full text-sm bg-purple-500/20 text-purple-400" data-type="bars">Bars</button>
+                            <button class="viz-type px-3 py-1 rounded-full text-sm opacity-50" data-type="wave">Wave</button>
+                            <button class="viz-type px-3 py-1 rounded-full text-sm opacity-50" data-type="circle">Circle</button>
+                        </div>
+                    </div>
+
+                    <!-- Equalizer Tab -->
+                    <div id="equalizerTab" class="tab-content hidden">
+                        <div class="flex justify-center gap-4 mb-6 flex-wrap">
+                            <button class="eq-preset px-3 py-1 rounded-full text-sm bg-purple-500/20 text-purple-400" data-preset="flat">Flat</button>
+                            <button class="eq-preset px-3 py-1 rounded-full text-sm opacity-50" data-preset="pop">Pop</button>
+                            <button class="eq-preset px-3 py-1 rounded-full text-sm opacity-50" data-preset="rock">Rock</button>
+                            <button class="eq-preset px-3 py-1 rounded-full text-sm opacity-50" data-preset="jazz">Jazz</button>
+                            <button class="eq-preset px-3 py-1 rounded-full text-sm opacity-50" data-preset="classical">Classical</button>
+                        </div>
+                        <div class="flex justify-center items-end gap-6 md:gap-10 h-48">
+                            <div class="flex flex-col items-center gap-2">
+                                <input type="range" class="eq-slider" id="eqBass" min="-12" max="12" value="0">
+                                <span class="text-sm opacity-70">Bass</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-2">
+                                <input type="range" class="eq-slider" id="eqMid" min="-12" max="12" value="0">
+                                <span class="text-sm opacity-70">Mid</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-2">
+                                <input type="range" class="eq-slider" id="eqTreble" min="-12" max="12" value="0">
+                                <span class="text-sm opacity-70">Treble</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lyrics Tab -->
+                    <div id="lyricsTab" class="tab-content hidden">
+                        <div id="lyricsPanel" class="lyrics-panel text-center space-y-4 py-4">
+                            <p class="lyrics-line opacity-50">♪ Loading lyrics... ♪</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel - Playlist -->
+            <div class="glass rounded-3xl p-6 max-h-[800px] overflow-hidden flex flex-col">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-bold">Playlist</h3>
+                    <div class="flex gap-2">
+                        <button id="favoritesFilter" class="control-btn p-2 rounded-full hover:bg-white/10" title="Show Favorites">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Mood Filter Buttons -->
+                <div class="mood-filters flex gap-2 mb-4 overflow-x-auto pb-2">
+                    <button class="mood-btn active px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap flex items-center gap-1.5 transition-all" data-mood="all">
+                        <span>🎵</span>
+                        <span>All</span>
+                    </button>
+                    <button class="mood-btn px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap flex items-center gap-1.5 transition-all" data-mood="energetic">
+                        <span>⚡</span>
+                        <span>Energetic</span>
+                    </button>
+                    <button class="mood-btn px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap flex items-center gap-1.5 transition-all" data-mood="happy">
+                        <span>😊</span>
+                        <span>Happy</span>
+                    </button>
+                    <button class="mood-btn px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap flex items-center gap-1.5 transition-all" data-mood="chill">
+                        <span>😌</span>
+                        <span>Chill</span>
+                    </button>
+                    <button class="mood-btn px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap flex items-center gap-1.5 transition-all" data-mood="sad">
+                        <span>💔</span>
+                        <span>Sad</span>
+                    </button>
+                </div>
+                
+                <div id="playlist" class="flex-1 overflow-y-auto space-y-1">
+                    <!-- Playlist items will be generated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mini Player -->
+    <div id="miniPlayer" class="mini-player glass rounded-2xl p-4 hidden">
+        <div class="flex items-center gap-3">
+            <img id="miniAlbum" src="" alt="Album" class="w-12 h-12 rounded-lg object-cover">
+            <div class="flex-1 min-w-0">
+                <p id="miniTitle" class="font-medium truncate">Song Title</p>
+                <p id="miniArtist" class="text-sm opacity-70 truncate">Artist</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <button id="miniPrev" class="control-btn p-1">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+                    </svg>
+                </button>
+                <button id="miniPlay" class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
+                    <svg id="miniPlayIcon" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                </button>
+                <button id="miniNext" class="control-btn p-1">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+                    </svg>
+                </button>
+                <button id="miniClose" class="control-btn p-1 ml-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="mt-3">
+            <div id="miniProgress" class="progress-bar h-1 rounded-full">
+                <div id="miniProgressFill" class="progress-fill h-full rounded-full" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sleep Timer Modal -->
+    <div id="sleepTimerModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="glass rounded-2xl p-6 w-80">
+            <h3 class="text-xl font-bold mb-4">Sleep Timer</h3>
+            <div class="space-y-3">
+                <button class="sleep-option w-full py-3 rounded-xl hover:bg-white/10 transition-colors" data-minutes="15">15 minutes</button>
+                <button class="sleep-option w-full py-3 rounded-xl hover:bg-white/10 transition-colors" data-minutes="30">30 minutes</button>
+                <button class="sleep-option w-full py-3 rounded-xl hover:bg-white/10 transition-colors" data-minutes="45">45 minutes</button>
+                <button class="sleep-option w-full py-3 rounded-xl hover:bg-white/10 transition-colors" data-minutes="60">1 hour</button>
+                <button class="sleep-option w-full py-3 rounded-xl hover:bg-white/10 transition-colors" data-minutes="0">Cancel Timer</button>
+            </div>
+            <p id="sleepTimerStatus" class="text-center mt-4 text-sm opacity-70"></p>
+            <button id="closeSleepModal" class="w-full mt-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 transition-colors">Close</button>
+        </div>
+    </div>
+
+    <!-- Playback Speed Modal -->
+    <div id="speedModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="glass rounded-2xl p-6 w-64">
+            <h3 class="text-lg font-bold mb-4 text-center">Playback Speed</h3>
+            <div class="space-y-2">
+                <button class="speed-option w-full py-2 rounded-xl hover:bg-white/10 transition-colors" data-speed="0.5">0.5x</button>
+                <button class="speed-option w-full py-2 rounded-xl hover:bg-white/10 transition-colors" data-speed="0.75">0.75x</button>
+                <button class="speed-option w-full py-2 rounded-xl bg-purple-500/20 text-purple-400" data-speed="1">1x (Normal)</button>
+                <button class="speed-option w-full py-2 rounded-xl hover:bg-white/10 transition-colors" data-speed="1.25">1.25x</button>
+                <button class="speed-option w-full py-2 rounded-xl hover:bg-white/10 transition-colors" data-speed="1.5">1.5x</button>
+                <button class="speed-option w-full py-2 rounded-xl hover:bg-white/10 transition-colors" data-speed="2">2x</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fullscreen Visualizer -->
+    <div id="fullscreenViz" class="fullscreen-visualizer flex-col items-center justify-center">
+        <canvas id="fullscreenCanvas" class="w-full h-full"></canvas>
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-8">
+            <img id="fsAlbum" src="" alt="Album" class="w-20 h-20 rounded-xl object-cover">
+            <div class="text-center">
+                <p id="fsTitle" class="text-2xl font-bold text-white">Song Title</p>
+                <p id="fsArtist" class="text-lg text-white/70">Artist</p>
+            </div>
+        </div>
+        <button id="closeFullscreenViz" class="absolute top-6 right-6 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="audio" crossorigin="anonymous"></audio>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

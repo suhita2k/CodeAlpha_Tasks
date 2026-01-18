@@ -1,0 +1,522 @@
+/* ============================================
+   ZenWave - Advanced Music Player Styles
+   ============================================ */
+
+/* Font Import */
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+/* ============================================
+   CSS Variables - Theme Colors
+   ============================================ */
+:root {
+    --bg-primary: #0f0f23;
+    --bg-secondary: #1a1a35;
+    --bg-tertiary: #252550;
+    --accent: #8b5cf6;
+    --accent-hover: #a78bfa;
+    --text-primary: #ffffff;
+    --text-secondary: #a1a1aa;
+}
+
+/* Light Theme Variables */
+.light-theme {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #e2e8f0;
+    --accent: #7c3aed;
+    --accent-hover: #6d28d9;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+/* ============================================
+   Glassmorphism Effect
+   ============================================ */
+.glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.light-theme .glass {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+   Album Cover Animations
+   ============================================ */
+.album-cover {
+    animation: float 6s ease-in-out infinite;
+    box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.4);
+}
+
+@keyframes float {
+    0%, 100% { 
+        transform: translateY(0) rotate(0deg); 
+    }
+    50% { 
+        transform: translateY(-10px) rotate(2deg); 
+    }
+}
+
+.playing .album-cover {
+    animation: float 6s ease-in-out infinite, pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% { 
+        box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.4); 
+    }
+    50% { 
+        box-shadow: 0 25px 80px -12px rgba(139, 92, 246, 0.7); 
+    }
+}
+
+/* ============================================
+   Progress Bar Styles
+   ============================================ */
+.progress-bar {
+    background: var(--bg-tertiary);
+    cursor: pointer;
+    position: relative;
+}
+
+.progress-fill {
+    background: linear-gradient(90deg, var(--accent), #ec4899);
+    transition: width 0.1s linear;
+}
+
+.progress-bar:hover .progress-thumb {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.progress-thumb {
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.2s ease;
+}
+
+/* ============================================
+   Volume Slider Styles
+   ============================================ */
+.volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--bg-tertiary);
+    border-radius: 10px;
+    height: 6px;
+    outline: none;
+}
+
+.volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.volume-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s;
+}
+
+.volume-slider::-moz-range-thumb:hover {
+    transform: scale(1.2);
+}
+
+/* ============================================
+   Playlist Item Styles
+   ============================================ */
+.playlist-item {
+    transition: all 0.3s ease;
+}
+
+.playlist-item:hover {
+    background: var(--bg-tertiary);
+    transform: translateX(5px);
+}
+
+.playlist-item.active {
+    background: linear-gradient(90deg, rgba(139, 92, 246, 0.3), transparent);
+    border-left: 3px solid var(--accent);
+}
+
+/* ============================================
+   Control Button Styles
+   ============================================ */
+.control-btn {
+    transition: all 0.2s ease;
+}
+
+.control-btn:hover {
+    transform: scale(1.1);
+    color: var(--accent);
+}
+
+.control-btn:active {
+    transform: scale(0.95);
+}
+
+/* Active Mode Indicator */
+.mode-active {
+    color: var(--accent) !important;
+    background: rgba(139, 92, 246, 0.2);
+}
+
+/* ============================================
+   Equalizer Slider Styles
+   ============================================ */
+.eq-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 120px;
+    background: transparent;
+    writing-mode: vertical-lr;
+    direction: rtl;
+}
+
+.eq-slider::-webkit-slider-track {
+    width: 8px;
+    background: var(--bg-tertiary);
+    border-radius: 10px;
+}
+
+.eq-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #ec4899);
+    cursor: pointer;
+}
+
+.eq-slider::-moz-range-track {
+    width: 8px;
+    background: var(--bg-tertiary);
+    border-radius: 10px;
+}
+
+.eq-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), #ec4899);
+    cursor: pointer;
+    border: none;
+}
+
+/* ============================================
+   Visualizer Canvas Styles
+   ============================================ */
+.visualizer-canvas {
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================
+   Lyrics Panel Styles
+   ============================================ */
+.lyrics-panel {
+    max-height: 300px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) var(--bg-tertiary);
+}
+
+.lyrics-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.lyrics-panel::-webkit-scrollbar-track {
+    background: var(--bg-tertiary);
+    border-radius: 3px;
+}
+
+.lyrics-panel::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 3px;
+}
+
+/* Lyrics Line Styles */
+.lyrics-line {
+    transition: all 0.3s ease;
+    opacity: 0.5;
+}
+
+.lyrics-line.active {
+    opacity: 1;
+    color: var(--accent);
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+/* ============================================
+   Mini Player Styles
+   ============================================ */
+.mini-player {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 320px;
+    z-index: 1000;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from { 
+        transform: translateY(100px); 
+        opacity: 0; 
+    }
+    to { 
+        transform: translateY(0); 
+        opacity: 1; 
+    }
+}
+
+/* ============================================
+   Tab Button Styles
+   ============================================ */
+.tab-btn {
+    transition: all 0.3s ease;
+}
+
+.tab-btn.active {
+    background: var(--accent);
+    color: white;
+}
+
+/* ============================================
+   Heart/Like Button Styles
+   ============================================ */
+.heart-btn.liked {
+    color: #ef4444;
+    animation: heartPop 0.3s ease;
+}
+
+@keyframes heartPop {
+    0%, 100% { 
+        transform: scale(1); 
+    }
+    50% { 
+        transform: scale(1.3); 
+    }
+}
+
+/* ============================================
+   Sleep Timer Active State
+   ============================================ */
+.sleep-timer-active {
+    color: #f59e0b;
+}
+
+/* ============================================
+   Speed Badge Styles
+   ============================================ */
+.speed-badge {
+    font-size: 0.65rem;
+    padding: 2px 6px;
+    background: var(--accent);
+    border-radius: 9999px;
+}
+
+/* ============================================
+   Fullscreen Visualizer Styles
+   ============================================ */
+.fullscreen-visualizer {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: #000;
+    display: none;
+}
+
+.fullscreen-visualizer.active {
+    display: flex;
+}
+
+/* ============================================
+   Responsive Styles
+   ============================================ */
+@media (max-width: 768px) {
+    .desktop-only { 
+        display: none !important; 
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-only { 
+        display: none !important; 
+    }
+}
+
+/* ============================================
+   Playlist Scrollbar Styles
+   ============================================ */
+#playlist {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) var(--bg-tertiary);
+}
+
+#playlist::-webkit-scrollbar {
+    width: 6px;
+}
+
+#playlist::-webkit-scrollbar-track {
+    background: var(--bg-tertiary);
+    border-radius: 3px;
+}
+
+#playlist::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 3px;
+}
+
+/* ============================================
+   Mood Filter Styles
+   ============================================ */
+.mood-filters {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.mood-filters::-webkit-scrollbar {
+    display: none;
+}
+
+.mood-btn {
+    background: var(--bg-tertiary);
+    border: 1px solid transparent;
+    opacity: 0.7;
+}
+
+.mood-btn:hover {
+    opacity: 1;
+    background: var(--bg-secondary);
+}
+
+.mood-btn.active {
+    opacity: 1;
+    border-color: var(--accent);
+}
+
+.mood-btn[data-mood="all"].active {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(236, 72, 153, 0.3));
+    border-color: #8b5cf6;
+}
+
+.mood-btn[data-mood="energetic"].active {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: #ef4444;
+    color: #fca5a5;
+}
+
+.mood-btn[data-mood="happy"].active {
+    background: rgba(245, 158, 11, 0.2);
+    border-color: #f59e0b;
+    color: #fcd34d;
+}
+
+.mood-btn[data-mood="chill"].active {
+    background: rgba(16, 185, 129, 0.2);
+    border-color: #10b981;
+    color: #6ee7b7;
+}
+
+.mood-btn[data-mood="sad"].active {
+    background: rgba(99, 102, 241, 0.2);
+    border-color: #6366f1;
+    color: #a5b4fc;
+}
+
+/* Mood Header Styles */
+.mood-header {
+    border-bottom: 1px solid var(--bg-tertiary);
+}
+
+.mood-header:first-child {
+    margin-top: 0 !important;
+}
+
+/* ============================================
+   Modal Backdrop Blur
+   ============================================ */
+#sleepTimerModal,
+#speedModal {
+    backdrop-filter: blur(4px);
+}
+
+/* ============================================
+   Playing Indicator Animation
+   ============================================ */
+#playingIndicator span:nth-child(1) {
+    animation: equalizer 0.8s ease-in-out infinite;
+}
+
+#playingIndicator span:nth-child(2) {
+    animation: equalizer 0.8s ease-in-out infinite 0.2s;
+}
+
+#playingIndicator span:nth-child(3) {
+    animation: equalizer 0.8s ease-in-out infinite 0.4s;
+}
+
+@keyframes equalizer {
+    0%, 100% { 
+        height: 12px; 
+    }
+    50% { 
+        height: 20px; 
+    }
+}
+
+/* ============================================
+   Focus States for Accessibility
+   ============================================ */
+button:focus-visible,
+input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* ============================================
+   Selection Color
+   ============================================ */
+::selection {
+    background: var(--accent);
+    color: white;
+}
+
+/* ============================================
+   Smooth Transitions for Theme Change
+   ============================================ */
+* {
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
