@@ -1,0 +1,739 @@
+/* ============================================
+   CalcIQ - Advanced Calculator Styles
+   Complete with Customization Features
+   ============================================ */
+
+/* Base Fonts */
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+.mono {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.calc-font {
+    font-family: var(--calc-font, 'JetBrains Mono'), monospace;
+    font-weight: var(--calc-font-weight, 600);
+}
+
+/* CSS Variables for Customization */
+:root {
+    --button-size: 56px;
+    --button-radius: 12px;
+    --calc-scale: 1;
+    --calc-font: 'JetBrains Mono';
+    --calc-font-size: 16px;
+    --calc-font-weight: 600;
+    --bg-blur: 0px;
+    --bg-opacity: 1;
+    --number-btn-color: #e5e7eb;
+    --number-btn-hover: #d1d5db;
+    --operator-btn-color: #6366f1;
+    --operator-btn-hover: #4f46e5;
+    --equals-btn-color: linear-gradient(135deg, #6366f1, #9333ea);
+    --clear-btn-color: #ef4444;
+}
+
+/* ============================================
+   Background Layer
+   ============================================ */
+#backgroundLayer {
+    background: var(--bg-color, #f3f4f6);
+}
+
+#backgroundLayer.gradient {
+    background: var(--bg-gradient);
+}
+
+#customImageBg {
+    filter: blur(var(--bg-blur));
+    opacity: var(--bg-opacity);
+}
+
+/* Theme Backgrounds */
+#backgroundLayer.theme-space {
+    background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+}
+
+#backgroundLayer.theme-space::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, white, transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 90px 40px, white, transparent),
+        radial-gradient(2px 2px at 160px 120px, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1px 1px at 230px 80px, white, transparent),
+        radial-gradient(2px 2px at 300px 150px, rgba(255,255,255,0.7), transparent),
+        radial-gradient(1px 1px at 50px 180px, white, transparent),
+        radial-gradient(2px 2px at 120px 220px, rgba(255,255,255,0.8), transparent);
+    background-size: 350px 250px;
+    animation: twinkle 4s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+#backgroundLayer.theme-jungle {
+    background: linear-gradient(135deg, #134e5e, #71b280);
+}
+
+#backgroundLayer.theme-jungle::before {
+    content: '🌿🌴🍃🌱🌿🍀🌴🌿🍃';
+    position: absolute;
+    inset: 0;
+    font-size: 40px;
+    opacity: 0.15;
+    word-wrap: break-word;
+    line-height: 1.5;
+    overflow: hidden;
+}
+
+#backgroundLayer.theme-candy {
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+}
+
+#backgroundLayer.theme-candy::before {
+    content: '🍭🍬🧁🍩🍭🍬🧁🍩🍭🍬';
+    position: absolute;
+    inset: 0;
+    font-size: 35px;
+    opacity: 0.2;
+    word-wrap: break-word;
+    line-height: 1.8;
+    overflow: hidden;
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+#backgroundLayer.theme-ocean {
+    background: linear-gradient(to bottom, #0077b6, #00b4d8, #90e0ef);
+}
+
+#backgroundLayer.theme-ocean::before {
+    content: '🐠🐟🦈🐙🦀🐚🌊🐠🐟';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 30px;
+    opacity: 0.2;
+    animation: swim 8s linear infinite;
+}
+
+@keyframes swim {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* ============================================
+   Custom Scrollbar
+   ============================================ */
+.custom-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+    background: #6366f1;
+    border-radius: 3px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+    background: #4f46e5;
+}
+
+/* ============================================
+   Calculator Size Modes
+   ============================================ */
+.calc-size-compact {
+    max-width: 320px;
+    transform: scale(0.85);
+    transform-origin: center;
+}
+
+.calc-size-normal {
+    max-width: 400px;
+    transform: scale(1);
+}
+
+.calc-size-large {
+    max-width: 500px;
+    transform: scale(1.1);
+    transform-origin: center;
+}
+
+.calc-size-fullscreen {
+    max-width: 100vw;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Custom Scale */
+#calculatorWrapper {
+    transform: scale(var(--calc-scale));
+    transform-origin: center;
+    transition: transform 0.3s ease;
+}
+
+/* ============================================
+   Button Sizing
+   ============================================ */
+.calc-btn {
+    height: var(--button-size);
+    min-height: var(--button-size);
+    transition: all 0.15s ease;
+    transform: scale(1);
+    font-size: var(--calc-font-size);
+}
+
+/* Button Size Presets */
+.btn-size-small .calc-btn {
+    --button-size: 40px;
+    font-size: 14px;
+}
+
+.btn-size-medium .calc-btn {
+    --button-size: 56px;
+    font-size: 18px;
+}
+
+.btn-size-large .calc-btn {
+    --button-size: 72px;
+    font-size: 22px;
+}
+
+/* ============================================
+   Button Shapes
+   ============================================ */
+.btn-shape-rounded .calc-btn {
+    border-radius: 12px;
+}
+
+.btn-shape-square .calc-btn {
+    border-radius: 6px;
+}
+
+.btn-shape-circle .calc-btn {
+    border-radius: 50%;
+}
+
+/* ============================================
+   Button Effects
+   ============================================ */
+.calc-btn:hover {
+    transform: scale(1.05);
+}
+
+.calc-btn:active {
+    transform: scale(0.95);
+}
+
+/* Glow Effect */
+.btn-glow .calc-btn {
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+}
+
+.btn-glow .calc-btn:hover {
+    box-shadow: 0 0 25px rgba(99, 102, 241, 0.6);
+}
+
+.btn-glow .btn-operator {
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+}
+
+.btn-glow .btn-equals {
+    box-shadow: 0 0 20px rgba(147, 51, 234, 0.5);
+}
+
+.btn-glow .btn-clear {
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+}
+
+/* Bounce Animation */
+.btn-bounce .calc-btn:active {
+    animation: bounce 0.3s ease;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: scale(0.95); }
+    50% { transform: scale(1.1); }
+}
+
+/* 3D Effect */
+.btn-3d .calc-btn {
+    box-shadow: 
+        0 4px 0 0 rgba(0,0,0,0.2),
+        0 6px 10px rgba(0,0,0,0.15);
+    transform: translateY(0);
+}
+
+.btn-3d .calc-btn:active {
+    box-shadow: 
+        0 2px 0 0 rgba(0,0,0,0.2),
+        0 3px 5px rgba(0,0,0,0.15);
+    transform: translateY(2px);
+}
+
+/* ============================================
+   Button Color Themes
+   ============================================ */
+.btn-operator {
+    background: var(--operator-btn-color) !important;
+    color: white !important;
+}
+
+.btn-operator:hover {
+    filter: brightness(1.1);
+}
+
+.btn-equals {
+    background: var(--equals-btn-color) !important;
+    color: white !important;
+}
+
+.btn-equals:hover {
+    filter: brightness(1.1);
+}
+
+.btn-clear {
+    background: var(--clear-btn-color) !important;
+    color: white !important;
+}
+
+.btn-clear:hover {
+    filter: brightness(1.1);
+}
+
+/* Button Theme: Sunset */
+.btn-theme-sunset .calc-btn:not(.btn-operator):not(.btn-equals):not(.btn-clear) {
+    background: #fed7aa !important;
+    color: #9a3412 !important;
+}
+
+.btn-theme-sunset .btn-operator {
+    background: #f97316 !important;
+}
+
+.btn-theme-sunset .btn-equals {
+    background: linear-gradient(135deg, #f97316, #dc2626) !important;
+}
+
+/* Button Theme: Forest */
+.btn-theme-forest .calc-btn:not(.btn-operator):not(.btn-equals):not(.btn-clear) {
+    background: #bbf7d0 !important;
+    color: #166534 !important;
+}
+
+.btn-theme-forest .btn-operator {
+    background: #16a34a !important;
+}
+
+.btn-theme-forest .btn-equals {
+    background: linear-gradient(135deg, #16a34a, #059669) !important;
+}
+
+/* Button Theme: Ocean */
+.btn-theme-ocean .calc-btn:not(.btn-operator):not(.btn-equals):not(.btn-clear) {
+    background: #bae6fd !important;
+    color: #0369a1 !important;
+}
+
+.btn-theme-ocean .btn-operator {
+    background: #0284c7 !important;
+}
+
+.btn-theme-ocean .btn-equals {
+    background: linear-gradient(135deg, #0284c7, #0891b2) !important;
+}
+
+/* Button Theme: Candy */
+.btn-theme-candy .calc-btn:not(.btn-operator):not(.btn-equals):not(.btn-clear) {
+    background: #fce7f3 !important;
+    color: #9d174d !important;
+}
+
+.btn-theme-candy .btn-operator {
+    background: #ec4899 !important;
+}
+
+.btn-theme-candy .btn-equals {
+    background: linear-gradient(135deg, #ec4899, #a855f7) !important;
+}
+
+/* Button Theme: Midnight */
+.btn-theme-midnight .calc-btn:not(.btn-operator):not(.btn-equals):not(.btn-clear) {
+    background: #334155 !important;
+    color: #e2e8f0 !important;
+}
+
+.btn-theme-midnight .btn-operator {
+    background: #7c3aed !important;
+}
+
+.btn-theme-midnight .btn-equals {
+    background: linear-gradient(135deg, #7c3aed, #4f46e5) !important;
+}
+
+.btn-theme-midnight .btn-clear {
+    background: #475569 !important;
+}
+
+/* ============================================
+   Ripple Effect
+   ============================================ */
+.ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(10, 10);
+    opacity: 0;
+    transition: transform .4s, opacity .8s;
+}
+
+.ripple:active::after {
+    transform: scale(0, 0);
+    opacity: .3;
+    transition: 0s;
+}
+
+/* ============================================
+   Slide Animations
+   ============================================ */
+.slide-in {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Fade In Animation */
+.fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   Display Glow Effect
+   ============================================ */
+.display-glow {
+    box-shadow: inset 0 0 30px rgba(99, 102, 241, 0.1);
+}
+
+/* ============================================
+   Theme Transition
+   ============================================ */
+.theme-transition {
+    transition: background-color 0.3s ease, 
+                color 0.3s ease, 
+                border-color 0.3s ease, 
+                box-shadow 0.3s ease;
+}
+
+/* ============================================
+   History Item Hover
+   ============================================ */
+.history-item {
+    transition: all 0.2s ease;
+}
+
+.history-item:hover {
+    transform: translateX(5px);
+}
+
+/* ============================================
+   Focus States for Accessibility
+   ============================================ */
+button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5);
+}
+
+button:focus:not(:focus-visible) {
+    box-shadow: none;
+}
+
+button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5);
+}
+
+/* ============================================
+   Number Display Styling
+   ============================================ */
+#display {
+    letter-spacing: -0.02em;
+    text-overflow: ellipsis;
+    font-size: calc(var(--calc-font-size) * 2.5);
+}
+
+#expression {
+    letter-spacing: 0.02em;
+    font-size: calc(var(--calc-font-size) * 0.875);
+}
+
+/* ============================================
+   Gradient Text
+   ============================================ */
+.gradient-text {
+    background: linear-gradient(to right, #6366f1, #9333ea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ============================================
+   Scientific Panel Animation
+   ============================================ */
+#scientificPanel {
+    animation: expandPanel 0.3s ease-out;
+}
+
+@keyframes expandPanel {
+    from {
+        opacity: 0;
+        max-height: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        max-height: 200px;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   Settings Panel Styles
+   ============================================ */
+.settings-tab {
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.settings-tab:hover {
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.settings-tab.active {
+    border-bottom-color: #6366f1;
+    color: #6366f1;
+}
+
+/* Settings Options */
+.btn-size-preset.active,
+.btn-shape-option.active,
+.font-option.active,
+.font-weight-option.active,
+.calc-size-option.active,
+.bg-color-option.active,
+.bg-gradient-option.active,
+.bg-theme-option.active,
+.btn-theme-option.active,
+.sound-type-option.active {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+}
+
+/* Sound Controls Animation */
+#volumeControl,
+#soundTypeControl,
+#specialSoundsControl,
+#testSoundControl {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#volumeControl.enabled,
+#soundTypeControl.enabled,
+#specialSoundsControl.enabled,
+#testSoundControl.enabled {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Sound Wave Animation */
+@keyframes soundWave {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+.sound-playing::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 2px solid currentColor;
+    border-radius: inherit;
+    animation: soundWave 0.3s ease-out;
+    pointer-events: none;
+}
+
+/* Range Sliders */
+input[type="range"] {
+    -webkit-appearance: none;
+    height: 8px;
+    border-radius: 4px;
+    background: #e5e7eb;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #6366f1;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.dark input[type="range"] {
+    background: #374151;
+}
+
+/* Color Picker */
+input[type="color"] {
+    -webkit-appearance: none;
+    border: 2px solid #e5e7eb;
+    padding: 0;
+    cursor: pointer;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 2px;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 6px;
+}
+
+/* ============================================
+   Mobile Responsiveness
+   ============================================ */
+@media (max-width: 640px) {
+    .calc-btn {
+        height: calc(var(--button-size) * 0.9);
+        min-height: calc(var(--button-size) * 0.9);
+    }
+    
+    #display {
+        font-size: calc(var(--calc-font-size) * 2);
+    }
+    
+    #expression {
+        font-size: calc(var(--calc-font-size) * 0.75);
+    }
+    
+    .calc-size-large {
+        transform: scale(1);
+    }
+    
+    #settingsPanel > div:last-child {
+        width: 100%;
+        max-height: 95vh;
+    }
+}
+
+@media (max-width: 380px) {
+    .calc-btn {
+        height: calc(var(--button-size) * 0.8);
+        font-size: calc(var(--calc-font-size) * 0.9);
+    }
+    
+    #scientificPanel .calc-btn {
+        font-size: calc(var(--calc-font-size) * 0.7);
+        height: calc(var(--button-size) * 0.7);
+    }
+}
+
+/* ============================================
+   Dark Mode Specific Styles
+   ============================================ */
+.dark .display-glow {
+    box-shadow: inset 0 0 30px rgba(99, 102, 241, 0.15);
+}
+
+.dark .custom-scroll::-webkit-scrollbar-thumb {
+    background: #818cf8;
+}
+
+.dark input[type="range"] {
+    background: #374151;
+}
+
+.dark input[type="color"] {
+    border-color: #4b5563;
+}
+
+/* ============================================
+   Print Styles (for exporting history)
+   ============================================ */
+@media print {
+    body {
+        background: white !important;
+    }
+    
+    #historyPanel {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+        box-shadow: none !important;
+    }
+    
+    .calc-btn,
+    #calcBody,
+    #mobileHistoryPanel,
+    #settingsPanel,
+    button[onclick="toggleTheme()"],
+    button[onclick="toggleHistory()"],
+    button[onclick="toggleSettings()"] {
+        display: none !important;
+    }
+}

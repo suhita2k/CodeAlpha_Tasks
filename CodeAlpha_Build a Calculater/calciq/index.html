@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CalcIQ - Advanced Calculator</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Comic+Neue:wght@400;700&family=Poppins:wght@400;500;600;700&family=Baloo+2:wght@400;500;600;700&family=Bubblegum+Sans&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen theme-transition">
+    <!-- Background Layer -->
+    <div id="backgroundLayer" class="fixed inset-0 z-0 transition-all duration-500"></div>
+    <div id="customImageBg" class="fixed inset-0 z-0 bg-cover bg-center hidden"></div>
+    
+    <div id="app" class="min-h-screen flex flex-col lg:flex-row items-center justify-center p-4 gap-4 relative z-10">
+        
+        <!-- History Panel -->
+        <div id="historyPanel" class="hidden lg:block w-full lg:w-80 h-auto lg:h-[600px] rounded-2xl shadow-2xl theme-transition overflow-hidden backdrop-blur-sm">
+            <div class="p-4 border-b theme-transition flex items-center justify-between">
+                <h2 class="font-semibold text-lg flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    History
+                </h2>
+                <button onclick="clearHistory()" class="text-red-500 hover:text-red-600 text-sm font-medium px-3 py-1 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-all">
+                    Clear All
+                </button>
+            </div>
+            <div id="historyList" class="h-[calc(100%-60px)] overflow-y-auto custom-scroll p-4 space-y-2">
+                <p id="emptyHistory" class="text-center text-gray-400 py-8">No calculations yet</p>
+            </div>
+        </div>
+        
+        <!-- Calculator -->
+        <div id="calculatorWrapper" class="w-full max-w-md calc-size-normal">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-4 px-2">
+                <h1 class="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
+                    CalcIQ
+                </h1>
+                <div class="flex items-center gap-2">
+                    <!-- Settings Toggle -->
+                    <button onclick="toggleSettings()" class="p-2 rounded-xl theme-transition hover:bg-gray-200 dark:hover:bg-gray-700 transition-all" title="Settings">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                    </button>
+                    <!-- History Toggle (Mobile) -->
+                    <button onclick="toggleHistory()" class="lg:hidden p-2 rounded-xl theme-transition hover:bg-gray-200 dark:hover:bg-gray-700 transition-all" title="Toggle History">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </button>
+                    <!-- Theme Toggle -->
+                    <button onclick="toggleTheme()" class="p-2 rounded-xl theme-transition hover:bg-gray-200 dark:hover:bg-gray-700 transition-all" title="Toggle Theme">
+                        <svg id="sunIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                        <svg id="moonIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                        </svg>
+                    </button>
+                    <!-- Fullscreen Toggle -->
+                    <button onclick="toggleFullscreen()" class="p-2 rounded-xl theme-transition hover:bg-gray-200 dark:hover:bg-gray-700 transition-all" title="Toggle Fullscreen">
+                        <svg id="expandIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+                        </svg>
+                        <svg id="shrinkIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5l5.25 5.25"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Calculator Body -->
+            <div class="rounded-3xl shadow-2xl theme-transition overflow-hidden backdrop-blur-sm" id="calcBody">
+                <!-- Display -->
+                <div class="p-6 display-glow">
+                    <div id="expression" class="calc-font text-right text-sm h-6 opacity-60 overflow-x-auto whitespace-nowrap"></div>
+                    <div id="display" class="calc-font text-right text-4xl font-semibold mt-2 overflow-x-auto whitespace-nowrap">0</div>
+                </div>
+                
+                <!-- Mode Toggle -->
+                <div class="px-4 pb-4">
+                    <div class="flex rounded-xl p-1 theme-transition" id="modeToggleContainer">
+                        <button onclick="setMode('basic')" id="basicModeBtn" class="flex-1 py-2 px-4 rounded-lg font-medium text-sm transition-all">
+                            Basic
+                        </button>
+                        <button onclick="setMode('scientific')" id="sciModeBtn" class="flex-1 py-2 px-4 rounded-lg font-medium text-sm transition-all">
+                            Scientific
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Scientific Buttons -->
+                <div id="scientificPanel" class="hidden px-4 pb-2">
+                    <div class="grid grid-cols-5 gap-2 mb-2">
+                        <button onclick="scientific('sin')" class="calc-btn ripple rounded-xl font-medium text-sm theme-transition">sin</button>
+                        <button onclick="scientific('cos')" class="calc-btn ripple rounded-xl font-medium text-sm theme-transition">cos</button>
+                        <button onclick="scientific('tan')" class="calc-btn ripple rounded-xl font-medium text-sm theme-transition">tan</button>
+                        <button onclick="scientific('log')" class="calc-btn ripple rounded-xl font-medium text-sm theme-transition">log</button>
+                        <button onclick="scientific('ln')" class="calc-btn ripple rounded-xl font-medium text-sm theme-transition">ln</button>
+                    </div>
+                    <div class="grid grid-cols-5 gap-2 mb-2">
+                        <button onclick="scientific('square')" class="calc-btn ripple rounded-xl font-medium text-sm theme-transition">x²</button>
+                        <button onclick="scientific('sqrt')" class="calc-btn ripple rounded-xl font-medium text-sm theme-transition">√x</button>
+                        <button onclick="scientific('power')" class="calc-btn ripple rounded-xl font-medium text-sm theme-transition">xʸ</button>
+                        <button onclick="scientific('pi')" class="calc-btn ripple rounded-xl font-medium text-sm theme-transition">π</button>
+                        <button onclick="scientific('e')" class="calc-btn ripple rounded-xl font-medium text-sm theme-transition">e</button>
+                    </div>
+                    <div class="grid grid-cols-5 gap-2">
+                        <button onclick="scientific('factorial')" class="calc-btn ripple rounded-xl font-medium text-sm theme-transition">n!</button>
+                        <button onclick="scientific('abs')" class="calc-btn ripple rounded-xl font-medium text-sm theme-transition">|x|</button>
+                        <button onclick="inputChar('(')" class="calc-btn ripple rounded-xl font-medium text-sm theme-transition">(</button>
+                        <button onclick="inputChar(')')" class="calc-btn ripple rounded-xl font-medium text-sm theme-transition">)</button>
+                        <button onclick="operator('%')" class="calc-btn ripple rounded-xl font-medium text-sm theme-transition">%</button>
+                    </div>
+                </div>
+                
+                <!-- Basic Buttons -->
+                <div class="p-4 grid grid-cols-4 gap-3" id="basicButtonsGrid">
+                    <button onclick="clearAll()" class="calc-btn ripple rounded-xl font-semibold text-lg btn-clear">AC</button>
+                    <button onclick="deleteLast()" class="calc-btn ripple rounded-xl font-semibold text-lg theme-transition">⌫</button>
+                    <button onclick="operator('%')" id="basicPercent" class="calc-btn ripple rounded-xl font-semibold text-lg theme-transition">%</button>
+                    <button onclick="operator('÷')" class="calc-btn ripple rounded-xl font-semibold text-lg btn-operator">÷</button>
+                    
+                    <button onclick="inputNumber('7')" class="calc-btn ripple rounded-xl font-semibold text-lg theme-transition">7</button>
+                    <button onclick="inputNumber('8')" class="calc-btn ripple rounded-xl font-semibold text-lg theme-transition">8</button>
+                    <button onclick="inputNumber('9')" class="calc-btn ripple rounded-xl font-semibold text-lg theme-transition">9</button>
+                    <button onclick="operator('×')" class="calc-btn ripple rounded-xl font-semibold text-lg btn-operator">×</button>
+                    
+                    <button onclick="inputNumber('4')" class="calc-btn ripple rounded-xl font-semibold text-lg theme-transition">4</button>
+                    <button onclick="inputNumber('5')" class="calc-btn ripple rounded-xl font-semibold text-lg theme-transition">5</button>
+                    <button onclick="inputNumber('6')" class="calc-btn ripple rounded-xl font-semibold text-lg theme-transition">6</button>
+                    <button onclick="operator('−')" class="calc-btn ripple rounded-xl font-semibold text-lg btn-operator">−</button>
+                    
+                    <button onclick="inputNumber('1')" class="calc-btn ripple rounded-xl font-semibold text-lg theme-transition">1</button>
+                    <button onclick="inputNumber('2')" class="calc-btn ripple rounded-xl font-semibold text-lg theme-transition">2</button>
+                    <button onclick="inputNumber('3')" class="calc-btn ripple rounded-xl font-semibold text-lg theme-transition">3</button>
+                    <button onclick="operator('+')" class="calc-btn ripple rounded-xl font-semibold text-lg btn-operator">+</button>
+                    
+                    <button onclick="toggleSign()" class="calc-btn ripple rounded-xl font-semibold text-lg theme-transition">±</button>
+                    <button onclick="inputNumber('0')" class="calc-btn ripple rounded-xl font-semibold text-lg theme-transition">0</button>
+                    <button onclick="inputDecimal()" class="calc-btn ripple rounded-xl font-semibold text-lg theme-transition">.</button>
+                    <button onclick="calculate()" class="calc-btn ripple rounded-xl font-semibold text-lg btn-equals">=</button>
+                </div>
+            </div>
+            
+            <!-- Keyboard Shortcuts Info -->
+            <div class="mt-4 text-center text-xs opacity-50">
+                <p>Keyboard: Numbers, Operators (+−*/), Enter (=), Backspace, Esc (AC)</p>
+            </div>
+        </div>
+        
+        <!-- Mobile History Panel -->
+        <div id="mobileHistoryPanel" class="hidden fixed inset-0 z-50 lg:hidden">
+            <div class="absolute inset-0 bg-black/50" onclick="toggleHistory()"></div>
+            <div class="absolute right-0 top-0 bottom-0 w-80 max-w-full theme-transition shadow-2xl slide-in backdrop-blur-sm">
+                <div class="p-4 border-b theme-transition flex items-center justify-between">
+                    <h2 class="font-semibold text-lg flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        History
+                    </h2>
+                    <div class="flex items-center gap-2">
+                        <button onclick="clearHistory()" class="text-red-500 hover:text-red-600 text-sm font-medium px-3 py-1 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-all">
+                            Clear
+                        </button>
+                        <button onclick="toggleHistory()" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div id="mobileHistoryList" class="h-[calc(100%-60px)] overflow-y-auto custom-scroll p-4 space-y-2">
+                    <p id="mobileEmptyHistory" class="text-center text-gray-400 py-8">No calculations yet</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Settings Panel -->
+        <div id="settingsPanel" class="hidden fixed inset-0 z-50">
+            <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="toggleSettings()"></div>
+            <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-2xl max-h-[90vh] theme-transition rounded-3xl shadow-2xl overflow-hidden slide-in">
+                <!-- Settings Header -->
+                <div class="p-4 border-b theme-transition flex items-center justify-between bg-gradient-to-r from-indigo-500 to-purple-600 text-white">
+                    <h2 class="font-bold text-xl flex items-center gap-2">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        Customize CalcIQ
+                    </h2>
+                    <button onclick="toggleSettings()" class="p-2 rounded-lg hover:bg-white/20 transition-all">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Settings Tabs -->
+                <div class="flex border-b theme-transition overflow-x-auto" id="settingsTabs">
+                    <button onclick="switchSettingsTab('buttons')" class="settings-tab active px-4 py-3 font-medium text-sm whitespace-nowrap">🔘 Buttons</button>
+                    <button onclick="switchSettingsTab('fonts')" class="settings-tab px-4 py-3 font-medium text-sm whitespace-nowrap">🔤 Fonts</button>
+                    <button onclick="switchSettingsTab('size')" class="settings-tab px-4 py-3 font-medium text-sm whitespace-nowrap">📐 Size</button>
+                    <button onclick="switchSettingsTab('background')" class="settings-tab px-4 py-3 font-medium text-sm whitespace-nowrap">🌈 Background</button>
+                    <button onclick="switchSettingsTab('theme')" class="settings-tab px-4 py-3 font-medium text-sm whitespace-nowrap">✨ Themes</button>
+                    <button onclick="switchSettingsTab('sounds')" class="settings-tab px-4 py-3 font-medium text-sm whitespace-nowrap">🔊 Sounds</button>
+                </div>
+                
+                <!-- Settings Content -->
+                <div class="p-6 overflow-y-auto max-h-[60vh] custom-scroll" id="settingsContent">
+                    
+                    <!-- Buttons Tab -->
+                    <div id="buttonsTab" class="settings-content">
+                        <div class="space-y-6">
+                            <!-- Button Size -->
+                            <div>
+                                <h3 class="font-semibold mb-3 flex items-center gap-2">
+                                    <span class="text-xl">📏</span> Button Size
+                                </h3>
+                                <div class="flex gap-2 mb-4">
+                                    <button onclick="setButtonSize('small')" class="btn-size-preset flex-1 py-3 px-4 rounded-xl border-2 transition-all hover:scale-105" data-size="small">
+                                        <span class="text-lg">👶</span>
+                                        <span class="block text-sm mt-1">Small</span>
+                                    </button>
+                                    <button onclick="setButtonSize('medium')" class="btn-size-preset flex-1 py-3 px-4 rounded-xl border-2 transition-all hover:scale-105" data-size="medium">
+                                        <span class="text-lg">👋</span>
+                                        <span class="block text-sm mt-1">Medium</span>
+                                    </button>
+                                    <button onclick="setButtonSize('large')" class="btn-size-preset flex-1 py-3 px-4 rounded-xl border-2 transition-all hover:scale-105" data-size="large">
+                                        <span class="text-lg">🧒</span>
+                                        <span class="block text-sm mt-1">Large</span>
+                                    </button>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <span class="text-sm opacity-60">Custom:</span>
+                                    <input type="range" id="buttonSizeSlider" min="40" max="80" value="56" class="flex-1 accent-indigo-500" oninput="customButtonSize(this.value)">
+                                    <span id="buttonSizeValue" class="text-sm font-mono w-12">56px</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Button Shape -->
+                            <div>
+                                <h3 class="font-semibold mb-3 flex items-center gap-2">
+                                    <span class="text-xl">⬜</span> Button Shape
+                                </h3>
+                                <div class="flex gap-2">
+                                    <button onclick="setButtonShape('rounded')" class="btn-shape-option flex-1 py-3 px-4 rounded-xl border-2 transition-all" data-shape="rounded">
+                                        <div class="w-8 h-8 bg-indigo-500 rounded-xl mx-auto mb-1"></div>
+                                        <span class="text-sm">Rounded</span>
+                                    </button>
+                                    <button onclick="setButtonShape('square')" class="btn-shape-option flex-1 py-3 px-4 rounded-xl border-2 transition-all" data-shape="square">
+                                        <div class="w-8 h-8 bg-indigo-500 rounded-md mx-auto mb-1"></div>
+                                        <span class="text-sm">Square</span>
+                                    </button>
+                                    <button onclick="setButtonShape('circle')" class="btn-shape-option flex-1 py-3 px-4 rounded-xl border-2 transition-all" data-shape="circle">
+                                        <div class="w-8 h-8 bg-indigo-500 rounded-full mx-auto mb-1"></div>
+                                        <span class="text-sm">Circle</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Button Effects -->
+                            <div>
+                                <h3 class="font-semibold mb-3 flex items-center gap-2">
+                                    <span class="text-xl">✨</span> Button Effects
+                                </h3>
+                                <div class="space-y-3">
+                                    <label class="flex items-center justify-between p-3 rounded-xl border theme-transition cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700">
+                                        <span>Glow Effect</span>
+                                        <input type="checkbox" id="glowToggle" class="w-5 h-5 accent-indigo-500" onchange="toggleGlow(this.checked)">
+                                    </label>
+                                    <label class="flex items-center justify-between p-3 rounded-xl border theme-transition cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700">
+                                        <span>Bounce Animation</span>
+                                        <input type="checkbox" id="bounceToggle" class="w-5 h-5 accent-indigo-500" onchange="toggleBounce(this.checked)">
+                                    </label>
+                                    <label class="flex items-center justify-between p-3 rounded-xl border theme-transition cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700">
+                                        <span>3D Effect</span>
+                                        <input type="checkbox" id="threeDToggle" class="w-5 h-5 accent-indigo-500" onchange="toggle3D(this.checked)">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Fonts Tab -->
+                    <div id="fontsTab" class="settings-content hidden">
+                        <div class="space-y-6">
+                            <!-- Font Size -->
+                            <div>
+                                <h3 class="font-semibold mb-3 flex items-center gap-2">
+                                    <span class="text-xl">🔠</span> Font Size
+                                </h3>
+                                <div class="flex items-center gap-4">
+                                    <span class="text-lg">A</span>
+                                    <input type="range" id="fontSizeSlider" min="12" max="24" value="16" class="flex-1 accent-indigo-500" oninput="setFontSize(this.value)">
+                                    <span class="text-2xl font-bold">A</span>
+                                </div>
+                                <div class="text-center mt-2">
+                                    <span id="fontSizeValue" class="text-sm opacity-60">16px</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Font Family -->
+                            <div>
+                                <h3 class="font-semibold mb-3 flex items-center gap-2">
+                                    <span class="text-xl">🎨</span> Font Style
+                                </h3>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <button onclick="setFontFamily('Inter')" class="font-option py-3 px-4 rounded-xl border-2 transition-all text-left" data-font="Inter">
+                                        <span class="block text-lg" style="font-family: Inter">123 + 456</span>
+                                        <span class="text-xs opacity-60">Inter (Default)</span>
+                                    </button>
+                                    <button onclick="setFontFamily('Comic Neue')" class="font-option py-3 px-4 rounded-xl border-2 transition-all text-left" data-font="Comic Neue">
+                                        <span class="block text-lg" style="font-family: 'Comic Neue'">123 + 456</span>
+                                        <span class="text-xs opacity-60">Comic Sans</span>
+                                    </button>
+                                    <button onclick="setFontFamily('Poppins')" class="font-option py-3 px-4 rounded-xl border-2 transition-all text-left" data-font="Poppins">
+                                        <span class="block text-lg" style="font-family: Poppins">123 + 456</span>
+                                        <span class="text-xs opacity-60">Poppins</span>
+                                    </button>
+                                    <button onclick="setFontFamily('Baloo 2')" class="font-option py-3 px-4 rounded-xl border-2 transition-all text-left" data-font="Baloo 2">
+                                        <span class="block text-lg" style="font-family: 'Baloo 2'">123 + 456</span>
+                                        <span class="text-xs opacity-60">Baloo (Bubble)</span>
+                                    </button>
+                                    <button onclick="setFontFamily('Bubblegum Sans')" class="font-option py-3 px-4 rounded-xl border-2 transition-all text-left" data-font="Bubblegum Sans">
+                                        <span class="block text-lg" style="font-family: 'Bubblegum Sans'">123 + 456</span>
+                                        <span class="text-xs opacity-60">Bubblegum</span>
+                                    </button>
+                                    <button onclick="setFontFamily('Fredoka')" class="font-option py-3 px-4 rounded-xl border-2 transition-all text-left" data-font="Fredoka">
+                                        <span class="block text-lg" style="font-family: Fredoka">123 + 456</span>
+                                        <span class="text-xs opacity-60">Fredoka</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Font Weight -->
+                            <div>
+                                <h3 class="font-semibold mb-3 flex items-center gap-2">
+                                    <span class="text-xl">💪</span> Font Weight
+                                </h3>
+                                <div class="flex gap-2">
+                                    <button onclick="setFontWeight('normal')" class="font-weight-option flex-1 py-3 px-4 rounded-xl border-2 transition-all" data-weight="normal">
+                                        <span class="font-normal">Normal</span>
+                                    </button>
+                                    <button onclick="setFontWeight('bold')" class="font-weight-option flex-1 py-3 px-4 rounded-xl border-2 transition-all" data-weight="bold">
+                                        <span class="font-bold">Bold</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Size Tab -->
+                    <div id="sizeTab" class="settings-content hidden">
+                        <div class="space-y-6">
+                            <!-- Calculator Size Presets -->
+                            <div>
+                                <h3 class="font-semibold mb-3 flex items-center gap-2">
+                                    <span class="text-xl">📐</span> Calculator Size
+                                </h3>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <button onclick="setCalcSize('compact')" class="calc-size-option py-4 px-4 rounded-xl border-2 transition-all hover:scale-105" data-size="compact">
+                                        <div class="w-8 h-10 border-2 border-current rounded mx-auto mb-2"></div>
+                                        <span class="text-sm">Compact</span>
+                                    </button>
+                                    <button onclick="setCalcSize('normal')" class="calc-size-option py-4 px-4 rounded-xl border-2 transition-all hover:scale-105" data-size="normal">
+                                        <div class="w-10 h-12 border-2 border-current rounded mx-auto mb-2"></div>
+                                        <span class="text-sm">Normal</span>
+                                    </button>
+                                    <button onclick="setCalcSize('large')" class="calc-size-option py-4 px-4 rounded-xl border-2 transition-all hover:scale-105" data-size="large">
+                                        <div class="w-12 h-14 border-2 border-current rounded mx-auto mb-2"></div>
+                                        <span class="text-sm">Large</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Custom Scale -->
+                            <div>
+                                <h3 class="font-semibold mb-3 flex items-center gap-2">
+                                    <span class="text-xl">🔍</span> Custom Scale
+                                </h3>
+                                <div class="flex items-center gap-4">
+                                    <span class="text-sm">50%</span>
+                                    <input type="range" id="calcScaleSlider" min="50" max="150" value="100" class="flex-1 accent-indigo-500" oninput="setCalcScale(this.value)">
+                                    <span class="text-sm">150%</span>
+                                </div>
+                                <div class="text-center mt-2">
+                                    <span id="calcScaleValue" class="text-sm opacity-60">100%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Background Tab -->
+                    <div id="backgroundTab" class="settings-content hidden">
+                        <div class="space-y-6">
+                            <!-- Solid Colors -->
+                            <div>
+                                <h3 class="font-semibold mb-3 flex items-center gap-2">
+                                    <span class="text-xl">🎨</span> Solid Colors
+                                </h3>
+                                <div class="grid grid-cols-6 gap-2">
+                                    <button onclick="setBgColor('#f3f4f6')" class="bg-color-option w-10 h-10 rounded-xl border-2 transition-all hover:scale-110" style="background: #f3f4f6"></button>
+                                    <button onclick="setBgColor('#1f2937')" class="bg-color-option w-10 h-10 rounded-xl border-2 transition-all hover:scale-110" style="background: #1f2937"></button>
+                                    <button onclick="setBgColor('#fecaca')" class="bg-color-option w-10 h-10 rounded-xl border-2 transition-all hover:scale-110" style="background: #fecaca"></button>
+                                    <button onclick="setBgColor('#bbf7d0')" class="bg-color-option w-10 h-10 rounded-xl border-2 transition-all hover:scale-110" style="background: #bbf7d0"></button>
+                                    <button onclick="setBgColor('#bfdbfe')" class="bg-color-option w-10 h-10 rounded-xl border-2 transition-all hover:scale-110" style="background: #bfdbfe"></button>
+                                    <button onclick="setBgColor('#ddd6fe')" class="bg-color-option w-10 h-10 rounded-xl border-2 transition-all hover:scale-110" style="background: #ddd6fe"></button>
+                                    <button onclick="setBgColor('#fef3c7')" class="bg-color-option w-10 h-10 rounded-xl border-2 transition-all hover:scale-110" style="background: #fef3c7"></button>
+                                    <button onclick="setBgColor('#fed7e2')" class="bg-color-option w-10 h-10 rounded-xl border-2 transition-all hover:scale-110" style="background: #fed7e2"></button>
+                                    <button onclick="setBgColor('#c4f1f9')" class="bg-color-option w-10 h-10 rounded-xl border-2 transition-all hover:scale-110" style="background: #c4f1f9"></button>
+                                    <button onclick="setBgColor('#e9d8fd')" class="bg-color-option w-10 h-10 rounded-xl border-2 transition-all hover:scale-110" style="background: #e9d8fd"></button>
+                                    <button onclick="setBgColor('#faf5ff')" class="bg-color-option w-10 h-10 rounded-xl border-2 transition-all hover:scale-110" style="background: #faf5ff"></button>
+                                    <button onclick="setBgColor('#111827')" class="bg-color-option w-10 h-10 rounded-xl border-2 transition-all hover:scale-110" style="background: #111827"></button>
+                                </div>
+                            </div>
+                            
+                            <!-- Gradients -->
+                            <div>
+                                <h3 class="font-semibold mb-3 flex items-center gap-2">
+                                    <span class="text-xl">🌈</span> Gradients
+                                </h3>
+                                <div class="grid grid-cols-4 gap-2">
+                                    <button onclick="setBgGradient('linear-gradient(135deg, #667eea 0%, #764ba2 100%)')" class="bg-gradient-option w-full h-12 rounded-xl border-2 transition-all hover:scale-105" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%)"></button>
+                                    <button onclick="setBgGradient('linear-gradient(135deg, #f093fb 0%, #f5576c 100%)')" class="bg-gradient-option w-full h-12 rounded-xl border-2 transition-all hover:scale-105" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"></button>
+                                    <button onclick="setBgGradient('linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)')" class="bg-gradient-option w-full h-12 rounded-xl border-2 transition-all hover:scale-105" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"></button>
+                                    <button onclick="setBgGradient('linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)')" class="bg-gradient-option w-full h-12 rounded-xl border-2 transition-all hover:scale-105" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)"></button>
+                                    <button onclick="setBgGradient('linear-gradient(135deg, #fa709a 0%, #fee140 100%)')" class="bg-gradient-option w-full h-12 rounded-xl border-2 transition-all hover:scale-105" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%)"></button>
+                                    <button onclick="setBgGradient('linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)')" class="bg-gradient-option w-full h-12 rounded-xl border-2 transition-all hover:scale-105" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)"></button>
+                                    <button onclick="setBgGradient('linear-gradient(135deg, #d299c2 0%, #fef9d7 100%)')" class="bg-gradient-option w-full h-12 rounded-xl border-2 transition-all hover:scale-105" style="background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%)"></button>
+                                    <button onclick="setBgGradient('linear-gradient(135deg, #0c3483 0%, #a2b6df 100%)')" class="bg-gradient-option w-full h-12 rounded-xl border-2 transition-all hover:scale-105" style="background: linear-gradient(135deg, #0c3483 0%, #a2b6df 100%)"></button>
+                                </div>
+                            </div>
+                            
+                            <!-- Theme Backgrounds -->
+                            <div>
+                                <h3 class="font-semibold mb-3 flex items-center gap-2">
+                                    <span class="text-xl">🎭</span> Theme Backgrounds
+                                </h3>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <button onclick="setBgTheme('space')" class="bg-theme-option p-4 rounded-xl border-2 transition-all hover:scale-105 text-left" data-theme="space">
+                                        <span class="text-2xl">🚀</span>
+                                        <span class="block font-medium mt-1">Space</span>
+                                        <span class="text-xs opacity-60">Stars & Galaxy</span>
+                                    </button>
+                                    <button onclick="setBgTheme('jungle')" class="bg-theme-option p-4 rounded-xl border-2 transition-all hover:scale-105 text-left" data-theme="jungle">
+                                        <span class="text-2xl">🌴</span>
+                                        <span class="block font-medium mt-1">Jungle</span>
+                                        <span class="text-xs opacity-60">Nature Vibes</span>
+                                    </button>
+                                    <button onclick="setBgTheme('candy')" class="bg-theme-option p-4 rounded-xl border-2 transition-all hover:scale-105 text-left" data-theme="candy">
+                                        <span class="text-2xl">🍭</span>
+                                        <span class="block font-medium mt-1">Candy</span>
+                                        <span class="text-xs opacity-60">Sweet Colors</span>
+                                    </button>
+                                    <button onclick="setBgTheme('ocean')" class="bg-theme-option p-4 rounded-xl border-2 transition-all hover:scale-105 text-left" data-theme="ocean">
+                                        <span class="text-2xl">🌊</span>
+                                        <span class="block font-medium mt-1">Ocean</span>
+                                        <span class="text-xs opacity-60">Deep Blue</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Custom Image -->
+                            <div>
+                                <h3 class="font-semibold mb-3 flex items-center gap-2">
+                                    <span class="text-xl">🖼️</span> Custom Image
+                                </h3>
+                                <div class="space-y-3">
+                                    <label class="block w-full p-4 border-2 border-dashed rounded-xl text-center cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-all">
+                                        <input type="file" id="bgImageUpload" accept="image/*" class="hidden" onchange="uploadBgImage(event)">
+                                        <span class="text-2xl block mb-2">📁</span>
+                                        <span class="text-sm">Click to upload image</span>
+                                    </label>
+                                    <div id="imageControls" class="hidden space-y-3">
+                                        <div class="flex items-center gap-4">
+                                            <span class="text-sm w-20">Blur:</span>
+                                            <input type="range" id="bgBlurSlider" min="0" max="20" value="0" class="flex-1 accent-indigo-500" oninput="setBgBlur(this.value)">
+                                            <span id="bgBlurValue" class="text-sm w-12">0px</span>
+                                        </div>
+                                        <div class="flex items-center gap-4">
+                                            <span class="text-sm w-20">Opacity:</span>
+                                            <input type="range" id="bgOpacitySlider" min="20" max="100" value="100" class="flex-1 accent-indigo-500" oninput="setBgOpacity(this.value)">
+                                            <span id="bgOpacityValue" class="text-sm w-12">100%</span>
+                                        </div>
+                                        <button onclick="clearBgImage()" class="w-full py-2 px-4 bg-red-500 text-white rounded-xl hover:bg-red-600 transition-all">
+                                            Remove Image
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sounds Tab -->
+                    <div id="soundsTab" class="settings-content hidden">
+                        <div class="space-y-6">
+                            <!-- Sound Toggle -->
+                            <div>
+                                <h3 class="font-semibold mb-3 flex items-center gap-2">
+                                    <span class="text-xl">🔊</span> Button Sounds
+                                </h3>
+                                <label class="flex items-center justify-between p-4 rounded-xl border theme-transition cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700">
+                                    <div>
+                                        <span class="font-medium">Enable Sounds</span>
+                                        <p class="text-xs opacity-60 mt-1">Play sound on button press</p>
+                                    </div>
+                                    <input type="checkbox" id="soundToggle" class="w-6 h-6 accent-indigo-500" onchange="toggleSound(this.checked)">
+                                </label>
+                            </div>
+                            
+                            <!-- Volume Control -->
+                            <div id="volumeControl" class="opacity-50 pointer-events-none">
+                                <h3 class="font-semibold mb-3 flex items-center gap-2">
+                                    <span class="text-xl">🎚️</span> Volume
+                                </h3>
+                                <div class="flex items-center gap-4">
+                                    <svg class="w-5 h-5 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+                                    </svg>
+                                    <input type="range" id="volumeSlider" min="0" max="100" value="50" class="flex-1 accent-indigo-500" oninput="setVolume(this.value)">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
+                                    </svg>
+                                </div>
+                                <div class="text-center mt-2">
+                                    <span id="volumeValue" class="text-sm opacity-60">50%</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Sound Type -->
+                            <div id="soundTypeControl" class="opacity-50 pointer-events-none">
+                                <h3 class="font-semibold mb-3 flex items-center gap-2">
+                                    <span class="text-xl">🎵</span> Sound Type
+                                </h3>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <button onclick="setSoundType('click')" class="sound-type-option p-4 rounded-xl border-2 transition-all hover:scale-105 text-left" data-sound="click">
+                                        <span class="text-2xl">👆</span>
+                                        <span class="block font-medium mt-1">Click</span>
+                                        <span class="text-xs opacity-60">Soft click</span>
+                                    </button>
+                                    <button onclick="setSoundType('pop')" class="sound-type-option p-4 rounded-xl border-2 transition-all hover:scale-105 text-left" data-sound="pop">
+                                        <span class="text-2xl">🫧</span>
+                                        <span class="block font-medium mt-1">Pop</span>
+                                        <span class="text-xs opacity-60">Bubble pop</span>
+                                    </button>
+                                    <button onclick="setSoundType('beep')" class="sound-type-option p-4 rounded-xl border-2 transition-all hover:scale-105 text-left" data-sound="beep">
+                                        <span class="text-2xl">🤖</span>
+                                        <span class="block font-medium mt-1">Beep</span>
+                                        <span class="text-xs opacity-60">Digital beep</span>
+                                    </button>
+                                    <button onclick="setSoundType('typewriter')" class="sound-type-option p-4 rounded-xl border-2 transition-all hover:scale-105 text-left" data-sound="typewriter">
+                                        <span class="text-2xl">⌨️</span>
+                                        <span class="block font-medium mt-1">Typewriter</span>
+                                        <span class="text-xs opacity-60">Mechanical key</span>
+                                    </button>
+                                    <button onclick="setSoundType('game')" class="sound-type-option p-4 rounded-xl border-2 transition-all hover:scale-105 text-left" data-sound="game">
+                                        <span class="text-2xl">🎮</span>
+                                        <span class="block font-medium mt-1">Game</span>
+                                        <span class="text-xs opacity-60">Retro game</span>
+                                    </button>
+                                    <button onclick="setSoundType('xylophone')" class="sound-type-option p-4 rounded-xl border-2 transition-all hover:scale-105 text-left" data-sound="xylophone">
+                                        <span class="text-2xl">🎹</span>
+                                        <span class="block font-medium mt-1">Xylophone</span>
+                                        <span class="text-xs opacity-60">Musical note</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Special Sounds -->
+                            <div id="specialSoundsControl" class="opacity-50 pointer-events-none">
+                                <h3 class="font-semibold mb-3 flex items-center gap-2">
+                                    <span class="text-xl">✨</span> Special Sounds
+                                </h3>
+                                <div class="space-y-3">
+                                    <label class="flex items-center justify-between p-3 rounded-xl border theme-transition cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700">
+                                        <div>
+                                            <span>Equals Sound</span>
+                                            <p class="text-xs opacity-60">Special sound for = button</p>
+                                        </div>
+                                        <input type="checkbox" id="equalsSoundToggle" class="w-5 h-5 accent-indigo-500" onchange="toggleEqualsSound(this.checked)">
+                                    </label>
+                                    <label class="flex items-center justify-between p-3 rounded-xl border theme-transition cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700">
+                                        <div>
+                                            <span>Error Sound</span>
+                                            <p class="text-xs opacity-60">Alert sound for errors</p>
+                                        </div>
+                                        <input type="checkbox" id="errorSoundToggle" class="w-5 h-5 accent-indigo-500" onchange="toggleErrorSound(this.checked)">
+                                    </label>
+                                    <label class="flex items-center justify-between p-3 rounded-xl border theme-transition cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700">
+                                        <div>
+                                            <span>Clear Sound</span>
+                                            <p class="text-xs opacity-60">Swoosh sound for AC</p>
+                                        </div>
+                                        <input type="checkbox" id="clearSoundToggle" class="w-5 h-5 accent-indigo-500" onchange="toggleClearSound(this.checked)">
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <!-- Test Sound Button -->
+                            <div id="testSoundControl" class="opacity-50 pointer-events-none">
+                                <button onclick="testSound()" class="w-full py-3 px-4 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl hover:from-indigo-600 hover:to-purple-700 transition-all font-medium flex items-center justify-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Test Sound
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Button Theme Tab -->
+                    <div id="themeTab" class="settings-content hidden">
+                        <div class="space-y-6">
+                            <!-- Button Color Schemes -->
+                            <div>
+                                <h3 class="font-semibold mb-3 flex items-center gap-2">
+                                    <span class="text-xl">🎨</span> Button Color Scheme
+                                </h3>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <button onclick="setButtonTheme('default')" class="btn-theme-option p-4 rounded-xl border-2 transition-all hover:scale-105" data-theme="default">
+                                        <div class="flex gap-1 justify-center mb-2">
+                                            <div class="w-6 h-6 rounded bg-gray-200"></div>
+                                            <div class="w-6 h-6 rounded bg-indigo-500"></div>
+                                            <div class="w-6 h-6 rounded bg-red-500"></div>
+                                        </div>
+                                        <span class="text-sm">Default</span>
+                                    </button>
+                                    <button onclick="setButtonTheme('sunset')" class="btn-theme-option p-4 rounded-xl border-2 transition-all hover:scale-105" data-theme="sunset">
+                                        <div class="flex gap-1 justify-center mb-2">
+                                            <div class="w-6 h-6 rounded bg-orange-200"></div>
+                                            <div class="w-6 h-6 rounded bg-orange-500"></div>
+                                            <div class="w-6 h-6 rounded bg-red-500"></div>
+                                        </div>
+                                        <span class="text-sm">Sunset</span>
+                                    </button>
+                                    <button onclick="setButtonTheme('forest')" class="btn-theme-option p-4 rounded-xl border-2 transition-all hover:scale-105" data-theme="forest">
+                                        <div class="flex gap-1 justify-center mb-2">
+                                            <div class="w-6 h-6 rounded bg-green-200"></div>
+                                            <div class="w-6 h-6 rounded bg-green-600"></div>
+                                            <div class="w-6 h-6 rounded bg-emerald-500"></div>
+                                        </div>
+                                        <span class="text-sm">Forest</span>
+                                    </button>
+                                    <button onclick="setButtonTheme('ocean')" class="btn-theme-option p-4 rounded-xl border-2 transition-all hover:scale-105" data-theme="ocean">
+                                        <div class="flex gap-1 justify-center mb-2">
+                                            <div class="w-6 h-6 rounded bg-cyan-200"></div>
+                                            <div class="w-6 h-6 rounded bg-blue-500"></div>
+                                            <div class="w-6 h-6 rounded bg-teal-500"></div>
+                                        </div>
+                                        <span class="text-sm">Ocean</span>
+                                    </button>
+                                    <button onclick="setButtonTheme('candy')" class="btn-theme-option p-4 rounded-xl border-2 transition-all hover:scale-105" data-theme="candy">
+                                        <div class="flex gap-1 justify-center mb-2">
+                                            <div class="w-6 h-6 rounded bg-pink-200"></div>
+                                            <div class="w-6 h-6 rounded bg-pink-500"></div>
+                                            <div class="w-6 h-6 rounded bg-purple-500"></div>
+                                        </div>
+                                        <span class="text-sm">Candy</span>
+                                    </button>
+                                    <button onclick="setButtonTheme('midnight')" class="btn-theme-option p-4 rounded-xl border-2 transition-all hover:scale-105" data-theme="midnight">
+                                        <div class="flex gap-1 justify-center mb-2">
+                                            <div class="w-6 h-6 rounded bg-slate-700"></div>
+                                            <div class="w-6 h-6 rounded bg-violet-600"></div>
+                                            <div class="w-6 h-6 rounded bg-slate-800"></div>
+                                        </div>
+                                        <span class="text-sm">Midnight</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Custom Button Colors -->
+                            <div>
+                                <h3 class="font-semibold mb-3 flex items-center gap-2">
+                                    <span class="text-xl">🖌️</span> Custom Colors
+                                </h3>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="text-sm opacity-60 block mb-1">Number Buttons</label>
+                                        <input type="color" id="numberBtnColor" value="#e5e7eb" class="w-full h-10 rounded-lg cursor-pointer" onchange="setCustomBtnColor('number', this.value)">
+                                    </div>
+                                    <div>
+                                        <label class="text-sm opacity-60 block mb-1">Operator Buttons</label>
+                                        <input type="color" id="operatorBtnColor" value="#6366f1" class="w-full h-10 rounded-lg cursor-pointer" onchange="setCustomBtnColor('operator', this.value)">
+                                    </div>
+                                    <div>
+                                        <label class="text-sm opacity-60 block mb-1">Equals Button</label>
+                                        <input type="color" id="equalsBtnColor" value="#8b5cf6" class="w-full h-10 rounded-lg cursor-pointer" onchange="setCustomBtnColor('equals', this.value)">
+                                    </div>
+                                    <div>
+                                        <label class="text-sm opacity-60 block mb-1">Clear Button</label>
+                                        <input type="color" id="clearBtnColor" value="#ef4444" class="w-full h-10 rounded-lg cursor-pointer" onchange="setCustomBtnColor('clear', this.value)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Settings Footer -->
+                <div class="p-4 border-t theme-transition flex justify-between items-center">
+                    <button onclick="resetAllSettings()" class="py-2 px-4 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all font-medium">
+                        Reset All
+                    </button>
+                    <button onclick="toggleSettings()" class="py-2 px-6 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl hover:from-indigo-600 hover:to-purple-700 transition-all font-medium">
+                        Done
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
