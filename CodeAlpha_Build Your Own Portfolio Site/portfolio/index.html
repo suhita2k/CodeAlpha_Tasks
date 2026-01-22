@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SUHITA D - Software Developer Portfolio | Building Solutions, Creating Impact">
+    <meta name="keywords" content="Software Developer, Web Developer, Python, Java, AI, Full Stack Developer, SUHITA D">
+    <meta name="author" content="SUHITA D">
+    <meta property="og:title" content="SUHITA D - Software Developer Portfolio">
+    <meta property="og:description" content="Growing skills, Building solutions, Creating impact.">
+    <meta property="og:type" content="website">
+    <meta name="robots" content="index, follow">
+    <title>SUHITA D | Software Developer Portfolio</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo gradient-text">SUHITA D</a>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#resume" class="nav-link">Resume</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"></button>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+        
+        <div class="hero-container">
+            <div class="hero-grid">
+                <!-- Hero Content -->
+                <div class="hero-content reveal-left">
+                    <p style="color: #6366f1; font-weight: 500; margin-bottom: 1rem;">👋 Hello, I'm</p>
+                    <h1><span class="gradient-text">SUHITA D</span></h1>
+                    <h2>
+                        <span>I'm a</span>
+                        <span class="typing-text gradient-text" id="typingText">Software Developer</span>
+                    </h2>
+                    <p>Growing skills, Building solutions, Creating impact.</p>
+                    <div class="hero-buttons">
+                        <a href="#projects" class="btn-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                            View Projects
+                        </a>
+                        <a href="#contact" class="btn-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                            Contact Me
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Hero Avatar -->
+                <div class="hero-avatar reveal-right">
+                    <div class="avatar-glow">
+                        <div class="avatar-circle">S</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid reveal">
+                <div class="glass-card stat-card">
+                    <div class="counter" data-target="10">0</div>
+                    <p class="stat-label">Certifications</p>
+                </div>
+                <div class="glass-card stat-card">
+                    <div class="counter" data-target="5">0</div>
+                    <p class="stat-label">Projects</p>
+                </div>
+                <div class="glass-card stat-card">
+                    <div class="counter" data-target="8">0</div>
+                    <p class="stat-label">Tech Skills</p>
+                </div>
+                <div class="glass-card stat-card">
+                    <div class="counter" data-target="2">0</div>
+                    <p class="stat-label">Internships</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="section-container">
+            <div class="section-header reveal">
+                <h2 class="section-title">About Me</h2>
+                <p class="section-subtitle">Get to know me better</p>
+            </div>
+
+            <div class="about-grid">
+                <!-- About Card 1 -->
+                <div class="glass-card about-card reveal-left">
+                    <div class="about-icon">👤</div>
+                    <h3 class="gradient-text">Who I Am</h3>
+                    <p>I am currently pursuing a B.E. in Electronics and Communication Engineering at V.S.B. Engineering College. I am a passionate Software Development and Software Engineering enthusiast with a strong foundation in programming and application development. I enjoy transforming ideas into real-world digital solutions through clean, efficient, and scalable code.</p>
+                </div>
+
+                <!-- About Card 2 -->
+                <div class="glass-card about-card reveal">
+                    <div class="about-icon">💼</div>
+                    <h3 class="gradient-text">Professional Introduction</h3>
+                    <p>I am a motivated engineering student with strong skills in problem-solving, logical reasoning, and collaborative teamwork. I actively work on real-world projects that integrate modern technologies with practical applications. My interests lie in building impactful software products, intelligent systems, and user-focused applications that solve meaningful problems.</p>
+                </div>
+
+                <!-- About Card 3 -->
+                <div class="glass-card about-card reveal-right">
+                    <div class="about-icon">🎯</div>
+                    <h3 class="gradient-text">Career Goals</h3>
+                    <p>My goal is to become a skilled Software Engineer specializing in full-stack development, AI-driven applications, and intelligent systems. I aim to work in innovative environments where I can contribute to cutting-edge technology, continuously learn, and create solutions that deliver real-world value.</p>
+                </div>
+            </div>
+
+            <!-- Languages -->
+            <div class="glass-card languages-card reveal">
+                <h3>
+                    <span>🌐</span>
+                    <span class="gradient-text">Languages</span>
+                </h3>
+                <div class="language-tags">
+                    <span class="language-tag english">English</span>
+                    <span class="language-tag tamil">Tamil</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="section-container">
+            <div class="section-header reveal">
+                <h2 class="section-title">My Skills</h2>
+                <p class="section-subtitle">Technologies & tools I work with</p>
+            </div>
+
+            <div class="skills-grid">
+                <!-- Technical Skills -->
+                <div class="skills-column reveal-left">
+                    <h3>
+                        <span>💻</span>
+                        <span>Technical Skills</span>
+                    </h3>
+                    
+                    <div class="skill-bars">
+                        <div class="glass-card skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">Python</span>
+                                <span class="skill-percent">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="85"></div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">C/C++</span>
+                                <span class="skill-percent">75%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="75"></div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">Java</span>
+                                <span class="skill-percent">70%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="70"></div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">Web Development</span>
+                                <span class="skill-percent">80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="80"></div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">AI Concepts</span>
+                                <span class="skill-percent">70%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="70"></div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">UI/UX Design</span>
+                                <span class="skill-percent">65%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="65"></div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card skill-item">
+                            <div class="skill-header">
+                                <span class="skill-name">MS Office (Word, Excel, PowerPoint)</span>
+                                <span class="skill-percent">90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="90"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Soft Skills -->
+                <div class="skills-column reveal-right">
+                    <h3>
+                        <span>🧠</span>
+                        <span>Soft Skills</span>
+                    </h3>
+
+                    <div class="soft-skills-grid">
+                        <div class="glass-card soft-skill-card reveal-scale">
+                            <div class="soft-skill-icon">🧩</div>
+                            <h4>Problem-Solving</h4>
+                            <p>Analytical thinking & creative solutions</p>
+                        </div>
+
+                        <div class="glass-card soft-skill-card reveal-scale">
+                            <div class="soft-skill-icon">⏰</div>
+                            <h4>Time Management</h4>
+                            <p>Efficient & deadline-oriented</p>
+                        </div>
+
+                        <div class="glass-card soft-skill-card reveal-scale">
+                            <div class="soft-skill-icon">🎤</div>
+                            <h4>Presentation Skills</h4>
+                            <p>Clear & impactful communication</p>
+                        </div>
+
+                        <div class="glass-card soft-skill-card reveal-scale">
+                            <div class="soft-skill-icon">🤝</div>
+                            <h4>Team Collaboration</h4>
+                            <p>Effective teamwork & cooperation</p>
+                        </div>
+                    </div>
+
+                    <!-- Skill Categories -->
+                    <div class="skill-categories">
+                        <h4>Skill Categories</h4>
+                        <div class="category-tags">
+                            <span class="tech-tag frontend">Frontend</span>
+                            <span class="tech-tag backend">Backend</span>
+                            <span class="tech-tag ai">AI/ML</span>
+                            <span class="tech-tag tools">Tools</span>
+                            <span class="tech-tag database">Database</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+        <div class="section-container">
+            <div class="section-header reveal">
+                <h2 class="section-title">My Projects</h2>
+                <p class="section-subtitle">Showcasing my work</p>
+            </div>
+
+            <div class="reveal">
+                <div class="glass-card project-card">
+                    <div class="project-grid">
+                        <!-- Project Visual -->
+                        <div class="project-visual">
+                            <div class="project-visual-content">
+                                <div class="project-visual-icon">📊</div>
+                                <h3>ADA</h3>
+                                <p>AI Data Analyst Agent</p>
+                            </div>
+                        </div>
+
+                        <!-- Project Details -->
+                        <div class="project-details">
+                            <div class="project-badges">
+                                <span class="badge featured">Featured</span>
+                                <span class="badge ai">AI Project</span>
+                            </div>
+
+                            <h3>AI Agent for Excel Data Analytics</h3>
+                            
+                            <p>ADA (AI Data Analyst Agent) is a web-based AI application that allows users to analyze Excel and CSV files using plain English questions. Users can simply upload a dataset and ask questions to get instant insights and visualizations.</p>
+
+                            <div class="tech-stack">
+                                <h4>Tech Stack:</h4>
+                                <div class="tech-stack-tags">
+                                    <span class="tech-stack-tag">Python 3.11</span>
+                                    <span class="tech-stack-tag">Flask</span>
+                                    <span class="tech-stack-tag">HTML/CSS/JS</span>
+                                    <span class="tech-stack-tag">Plotly.js</span>
+                                    <span class="tech-stack-tag">Pandas</span>
+                                    <span class="tech-stack-tag">NumPy</span>
+                                    <span class="tech-stack-tag">Google Gemini</span>
+                                    <span class="tech-stack-tag">SQLite</span>
+                                    <span class="tech-stack-tag">Flask-SQLAlchemy</span>
+                                    <span class="tech-stack-tag">Gunicorn</span>
+                                </div>
+                            </div>
+
+                            <div class="project-buttons">
+                                <a href="https://github.com/suhita2k/AI-Data-Analyst-Agent.git" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                                    View on GitHub
+                                </a>
+                                <a href="#" class="btn-secondary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                                    Live Demo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume Section -->
+    <section id="resume">
+        <div class="section-container">
+            <div class="section-header reveal">
+                <h2 class="section-title">Resume</h2>
+                <p class="section-subtitle">My educational journey & achievements</p>
+            </div>
+
+            <div class="resume-grid">
+                <!-- Education -->
+                <div class="resume-column reveal-left">
+                    <h3>
+                        <span>🎓</span>
+                        <span>Education</span>
+                    </h3>
+
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="glass-card timeline-card">
+                                <span class="timeline-date">2024 - 2028</span>
+                                <h4>B.E Electronics and Communication Engineering</h4>
+                                <p class="school">V.S.B Engineering College</p>
+                                <p class="grade">Current CGPA: 8.23</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="glass-card timeline-card">
+                                <span class="timeline-date">Higher Education (11th & 12th)</span>
+                                <h4>SSVM School</h4>
+                                <p class="school">Manmanglam, Karur, Tamil Nadu</p>
+                                <p class="grade">Percentage: 75%</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="glass-card timeline-card">
+                                <span class="timeline-date">Secondary Education (10th)</span>
+                                <h4>Little Flower School</h4>
+                                <p class="school">Manavadi, Karur, Tamil Nadu</p>
+                                <p class="grade">Percentage: 80%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience & Internships -->
+                <div class="resume-column reveal-right">
+                    <h3>
+                        <span>💼</span>
+                        <span>Internships</span>
+                    </h3>
+
+                    <div class="internship-list">
+                        <div class="glass-card internship-card">
+                            <div class="internship-icon factory">🏭</div>
+                            <div class="internship-content">
+                                <h4>Chettinadu Cement Factory</h4>
+                                <p class="duration">2 Weeks Internship</p>
+                                <p>Gained practical knowledge about industrial operations, software processors, hardware development, and cement manufacturing processes.</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-card internship-card">
+                            <div class="internship-icon virtual">💻</div>
+                            <div class="internship-content">
+                                <span class="ongoing-badge">Ongoing</span>
+                                <h4>Infosys Virtual Internship 6.0</h4>
+                                <p class="duration">Currently Active</p>
+                                <p>Working on virtual projects and gaining industry-relevant skills.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Achievements -->
+                    <div class="achievements-section">
+                        <h3>
+                            <span>🏆</span>
+                            <span>Achievements</span>
+                        </h3>
+
+                        <div class="achievements-list">
+                            <div class="glass-card achievement-card">
+                                <div class="achievement-icon">🥇</div>
+                                <div>
+                                    <h4>1st Place in Paper Presentation</h4>
+                                    <p>V.S.B Engineering College</p>
+                                </div>
+                            </div>
+
+                            <div class="glass-card achievement-card">
+                                <div class="achievement-icon">🎯</div>
+                                <div>
+                                    <h4>Cleared Round 1 of TCS CodeVita</h4>
+                                    <p>National Level Coding Competition</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certifications -->
+            <div class="certifications-section reveal">
+                <h3>
+                    <span>📜</span>
+                    <span>Certifications</span>
+                </h3>
+
+                <!-- Unique Hexagonal Grid Certification Display -->
+                <div class="cert-showcase">
+                    <div class="cert-orbit-container">
+                        <!-- Central Badge -->
+                        <div class="cert-center-badge">
+                            <div class="cert-center-content">
+                                <span class="cert-count">10+</span>
+                                <span class="cert-label">Certifications</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Orbiting Certification Cards -->
+                        <div class="cert-orbit">
+                            <div class="cert-hex-card" data-category="education" style="--i: 0;">
+                                <div class="cert-hex-inner">
+                                    <div class="cert-hex-icon">🔬</div>
+                                    <h4>Semiconductor</h4>
+                                    <p>NPTEL</p>
+                                </div>
+                            </div>
+                            
+                            <div class="cert-hex-card" data-category="professional" style="--i: 1;">
+                                <div class="cert-hex-inner">
+                                    <div class="cert-hex-icon">💼</div>
+                                    <h4>Career Edge</h4>
+                                    <p>TCS ION</p>
+                                </div>
+                            </div>
+                            
+                            <div class="cert-hex-card" data-category="development" style="--i: 2;">
+                                <div class="cert-hex-inner">
+                                    <div class="cert-hex-icon">🌐</div>
+                                    <h4>Full Stack</h4>
+                                    <p>Novi Tech</p>
+                                </div>
+                            </div>
+                            
+                            <div class="cert-hex-card" data-category="programming" style="--i: 3;">
+                                <div class="cert-hex-inner">
+                                    <div class="cert-hex-icon">☕</div>
+                                    <h4>Python & Java</h4>
+                                    <p>Infosys</p>
+                                </div>
+                            </div>
+                            
+                            <div class="cert-hex-card" data-category="design" style="--i: 4;">
+                                <div class="cert-hex-inner">
+                                    <div class="cert-hex-icon">🎨</div>
+                                    <h4>UI/UX Design</h4>
+                                    <p>Coursera</p>
+                                </div>
+                            </div>
+                            
+                            <div class="cert-hex-card" data-category="programming" style="--i: 5;">
+                                <div class="cert-hex-inner">
+                                    <div class="cert-hex-icon">🐍</div>
+                                    <h4>Python Intro</h4>
+                                    <p>Coursera</p>
+                                </div>
+                            </div>
+                            
+                            <div class="cert-hex-card" data-category="ai" style="--i: 6;">
+                                <div class="cert-hex-inner">
+                                    <div class="cert-hex-icon">🤖</div>
+                                    <h4>AI Agent</h4>
+                                    <p>Google</p>
+                                </div>
+                            </div>
+                            
+                            <div class="cert-hex-card" data-category="iot" style="--i: 7;">
+                                <div class="cert-hex-inner">
+                                    <div class="cert-hex-icon">📡</div>
+                                    <h4>IoT & Digital</h4>
+                                    <p>Cisco Academy</p>
+                                </div>
+                            </div>
+                            
+                            <div class="cert-hex-card" data-category="ai" style="--i: 8;">
+                                <div class="cert-hex-inner">
+                                    <div class="cert-hex-icon">🧠</div>
+                                    <h4>AI Concepts</h4>
+                                    <p>Microsoft</p>
+                                </div>
+                            </div>
+                            
+                            <div class="cert-hex-card" data-category="ai" style="--i: 9;">
+                                <div class="cert-hex-inner">
+                                    <div class="cert-hex-icon">⚡</div>
+                                    <h4>AI Agent Basics</h4>
+                                    <p>Simplilearn</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category Filter Buttons -->
+                    <div class="cert-filter-btns">
+                        <button class="cert-filter-btn active" data-filter="all">All</button>
+                        <button class="cert-filter-btn" data-filter="ai">🤖 AI</button>
+                        <button class="cert-filter-btn" data-filter="programming">💻 Programming</button>
+                        <button class="cert-filter-btn" data-filter="development">🌐 Development</button>
+                        <button class="cert-filter-btn" data-filter="professional">💼 Professional</button>
+                    </div>
+
+                    <!-- Certification List View (Alternative) -->
+                    <div class="cert-list-view">
+                        <div class="cert-list-item" data-category="education">
+                            <div class="cert-list-icon">🔬</div>
+                            <div class="cert-list-info">
+                                <h5>Introduction to Semiconductor</h5>
+                                <span>NPTEL</span>
+                            </div>
+                            <div class="cert-list-badge">Completed</div>
+                        </div>
+                        
+                        <div class="cert-list-item" data-category="professional">
+                            <div class="cert-list-icon">💼</div>
+                            <div class="cert-list-info">
+                                <h5>TCS ION Career Edge - Young Professional</h5>
+                                <span>TCS</span>
+                            </div>
+                            <div class="cert-list-badge">Completed</div>
+                        </div>
+                        
+                        <div class="cert-list-item" data-category="development">
+                            <div class="cert-list-icon">🌐</div>
+                            <div class="cert-list-info">
+                                <h5>Full Stack Development</h5>
+                                <span>Novi Tech</span>
+                            </div>
+                            <div class="cert-list-badge">Completed</div>
+                        </div>
+                        
+                        <div class="cert-list-item" data-category="programming">
+                            <div class="cert-list-icon">☕</div>
+                            <div class="cert-list-info">
+                                <h5>Python and Java</h5>
+                                <span>Infosys</span>
+                            </div>
+                            <div class="cert-list-badge">Completed</div>
+                        </div>
+                        
+                        <div class="cert-list-item" data-category="design">
+                            <div class="cert-list-icon">🎨</div>
+                            <div class="cert-list-info">
+                                <h5>Designing User Interfaces and Experiences (UI/UX)</h5>
+                                <span>Coursera</span>
+                            </div>
+                            <div class="cert-list-badge">Completed</div>
+                        </div>
+                        
+                        <div class="cert-list-item" data-category="programming">
+                            <div class="cert-list-icon">🐍</div>
+                            <div class="cert-list-info">
+                                <h5>Introduction to Python Programming</h5>
+                                <span>Coursera</span>
+                            </div>
+                            <div class="cert-list-badge">Completed</div>
+                        </div>
+                        
+                        <div class="cert-list-item" data-category="ai">
+                            <div class="cert-list-icon">🤖</div>
+                            <div class="cert-list-info">
+                                <h5>5 Days AI Agent Intensive Course</h5>
+                                <span>Google</span>
+                            </div>
+                            <div class="cert-list-badge">Completed</div>
+                        </div>
+                        
+                        <div class="cert-list-item" data-category="iot">
+                            <div class="cert-list-icon">📡</div>
+                            <div class="cert-list-info">
+                                <h5>Introduction to IoT and Digital Transformation</h5>
+                                <span>Cisco Academy</span>
+                            </div>
+                            <div class="cert-list-badge">Completed</div>
+                        </div>
+                        
+                        <div class="cert-list-item" data-category="ai">
+                            <div class="cert-list-icon">🧠</div>
+                            <div class="cert-list-info">
+                                <h5>Introduction to AI Concepts</h5>
+                                <span>Microsoft</span>
+                            </div>
+                            <div class="cert-list-badge">Completed</div>
+                        </div>
+                        
+                        <div class="cert-list-item" data-category="ai">
+                            <div class="cert-list-icon">⚡</div>
+                            <div class="cert-list-info">
+                                <h5>AI Agent for Beginners</h5>
+                                <span>Simplilearn</span>
+                            </div>
+                            <div class="cert-list-badge">Completed</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="download-resume">
+                    <a href="#" class="btn-primary" download>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Download Resume (PDF)
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="section-container">
+            <div class="section-header reveal">
+                <h2 class="section-title">Contact Me</h2>
+                <p class="section-subtitle">Let's connect and work together</p>
+            </div>
+
+            <div class="contact-grid">
+                <!-- Contact Form -->
+                <div class="reveal-left">
+                    <div class="glass-card contact-form-card">
+                        <h3>Send a Message</h3>
+                        <form id="contactForm" class="contact-form">
+                            <div class="form-group">
+                                <label for="name">Your Name</label>
+                                <input type="text" id="name" name="name" class="form-input" placeholder="Enter your name" required aria-required="true">
+                                <p class="form-error" id="nameError">Please enter your name</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email" required aria-required="true">
+                                <p class="form-error" id="emailError">Please enter a valid email</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" rows="5" class="form-input" placeholder="Your message here..." required aria-required="true"></textarea>
+                                <p class="form-error" id="messageError">Please enter your message</p>
+                            </div>
+
+                            <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="contact-info reveal-right">
+                    <div class="glass-card contact-info-card">
+                        <div class="contact-icon email">📧</div>
+                        <div>
+                            <h4>Email</h4>
+                            <a href="mailto:suhidharma@gmail.com">suhidharma@gmail.com</a>
+                        </div>
+                    </div>
+
+                    <div class="glass-card contact-info-card">
+                        <div class="contact-icon location">📍</div>
+                        <div>
+                            <h4>Location</h4>
+                            <p>Tamil Nadu, India</p>
+                        </div>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="glass-card social-card">
+                        <h4>Connect with me</h4>
+                        <div class="social-links">
+                            <a href="https://github.com/suhita2k" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="GitHub">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                            </a>
+                            <a href="https://www.linkedin.com/in/suhita-d-81965336a" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                            </a>
+                            <a href="mailto:suhidharma@gmail.com" class="social-icon" aria-label="Email">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h3 class="gradient-text">SUHITA D</h3>
+                <p>Software Developer</p>
+            </div>
+
+            <div class="footer-social">
+                <a href="https://github.com/suhita2k" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="GitHub">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/suhita-d-81965336a" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                </a>
+                <a href="mailto:suhidharma@gmail.com" class="social-icon" aria-label="Email">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </a>
+            </div>
+
+            <p class="footer-copyright">
+                © <span id="currentYear"></span> SUHITA D. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+    </button>
+
+    <!-- Success Message -->
+    <div class="success-message" id="successMessage">
+        ✅ Message sent successfully!
+    </div>
+
+    <!-- Custom JavaScript -->
+    <script src="js/script.js"></script>
+</body>
+</html>
